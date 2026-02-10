@@ -1,0 +1,473 @@
+/**
+ * Main CSS file for Energieburcht theme.
+ */
+
+:root {
+    --header-height-desktop: 140px;
+    --header-top-height: 80px;
+}
+
+/* =Global Layout
+-------------------------------------------------------------- */
+/* Global Button Styles */
+.button,
+.wp-block-button__link,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    border-radius: 0.8rem;
+    box-shadow: none;
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: var(--wp--preset--font-family--system-sans);
+    background-color: var(--wp--preset--color--blue);
+    color: var(--wp--preset--color--white);
+    border: none;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    line-height: 1.5;
+}
+
+.button:hover,
+.wp-block-button__link:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover {
+    color: var(--wp--preset--color--white);
+    opacity: 0.9;
+    text-decoration: none;
+}
+
+body {
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+body.menu-open {
+    overflow: hidden; /* Lock scroll when menu is open */
+}
+
+.container {
+    max-width: var(--wp--style--global--content-size);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: var(--wp--preset--spacing--md);
+    padding-right: var(--wp--preset--spacing--md);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =Header
+-------------------------------------------------------------- */
+.site-header {
+    background-color: var(--wp--preset--color--white);
+    position: relative;
+    z-index: 1000;
+}
+
+/* Top Bar */
+.header-top {
+    padding: var(--wp--preset--spacing--sm) 0;
+    background-color: var(--wp--preset--color--white);
+    z-index: 99;
+    position: relative;
+}
+
+.header-top .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.site-branding .custom-logo-link {
+    display: block;
+}
+
+.site-branding .custom-logo {
+    max-height: 60px;
+    width: auto;
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--wp--preset--spacing--sm);
+    align-items: center;
+}
+
+/* Widget Header Right styling */
+.header-actions .widget {
+    margin-bottom: 0;
+}
+
+.header-actions ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* Example button style for CTA in widget */
+
+
+/* Navigation Bar (Desktop) */
+.header-bottom {
+    background-color: var(--wp--preset--color--white);
+    z-index: 90;
+}
+
+.menu-items {
+    box-shadow: 0 .125em .5em rgba(0,0,0,.15);
+    border: 1px solid #efefef;
+    border-radius: 0.8rem;
+    background: #fff;
+    display: flex;
+    margin: 0;
+    justify-content: flex-start;
+    gap: var(--wp--preset--spacing--lg);
+    padding: 15px;
+    box-sizing: border-box;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.menu-items li {
+    list-style: none;
+    width: 100%;
+    position: relative; 
+}
+
+.menu-items a {
+    display: inline-block;
+    border: 1px solid #fff;
+    border-radius: .8rem;
+    font-family: var(--wp--preset--font-family--mic-32-new);
+    font-weight: 500;
+    padding: 9px 15px;
+    transition: all .2s ease-in-out;
+    text-decoration: none;
+    color: var(--wp--preset--color--navy);
+}
+
+.menu-items a:hover {
+    border-color: #e0f0f5;
+}
+
+.menu-items .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--wp--preset--color--white);
+    border: 1px solid #efefef;
+    border-radius: 0.8rem;
+    box-shadow: 0 .125em .5em rgba(0,0,0,.15);
+    flex-direction: column;
+    gap: var(--wp--preset--spacing--lg);
+    padding: 15px;
+    box-sizing: border-box;
+    width: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: all .2s ease-in-out;
+    min-width: 240px;
+}
+
+.menu-items .sub-menu a {
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
+}
+
+.menu-items .sub-menu a:hover {
+    background-color: #e0f0f5;
+}
+
+
+
+.menu-items li:hover .sub-menu {
+    visibility: visible;
+    opacity: 1;
+    margin-top: 20px;
+}
+
+/* .main-navigation a:hover,
+.main-navigation .current-menu-item > a {
+    color: var(--wp--preset--color--blue);
+    border-bottom-color: var(--wp--preset--color--blue);
+} */
+
+/* Mobile Toggle - Hidden on Desktop */
+.mobile-nav-toggle {
+    display: none;
+}
+
+/* Desktop Styles */
+@media (min-width: 992px) {
+    .header-bottom {
+        position: sticky;
+        top: 0;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 991px) {
+    /* Sticky Top Bar */
+
+    
+    .header-top {
+        position: sticky;
+        top: 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    /* Ensure header actions (icons) remain visible but maybe smaller */
+    .header-actions {
+        gap: 0.5rem;
+    }
+
+    /* Navigation Overlay */
+    .main-navigation.header-bottom {
+        position: fixed;
+        top: 0; /* Cover entire screen */
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--wp--preset--color--white);
+        
+        /* Layout logic */
+        padding-top: 80px; /* Space for sticky header top */
+        padding-bottom: 100px; /* Space for bottom button */
+        
+        /* Animation */
+        transform: translateY(100%); /* Slide up from bottom or overlay? */
+        /* Reference implies overlay. Let's do slide up or fade in. */
+        /* User image shows it taking over content below header. */
+        
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+        z-index: 99; /* Below header-top (101) */
+        overflow-y: auto;
+        
+        border-bottom: none;
+    }
+
+    .main-navigation.toggled {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .main-navigation .menu-items {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 0 var(--wp--preset--spacing--md);
+    }
+
+    .main-navigation .menu-items > li {
+        border-bottom: 1px solid var(--wp--preset--color--off-white);
+    }
+
+    .main-navigation a {
+        padding: 1rem 0;
+        font-size: 1.125rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Add chevron indicators for submenus (simulated for now) */
+    .main-navigation .menu-item-has-children > a::after {
+        content: '\203A'; /* Chevron right */
+        font-size: 1.5rem;
+        transform: rotate(90deg); /* Point down? or right? */
+        color: var(--wp--preset--color--blue);
+    }
+
+    /* Floating Hamburger Button (Fixed Bottom Center) */
+    .mobile-nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        
+        background-color: var(--wp--preset--color--white); /* Default closed */
+        border: none;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        z-index: 10000; /* Extremely high z-index */
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    /* Bars (Hamburger) */
+    .mobile-nav-toggle .icon-bar {
+        width: 24px;
+        height: 2px;
+        background-color: var(--wp--preset--color--blue);
+        margin: 2px 0;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    /* Open State: Button becomes Blue X */
+    .mobile-nav-toggle[aria-expanded="true"] {
+        background-color: var(--wp--preset--color--off-white); /* Reference looks light */
+        box-shadow: none;
+        border: 1px solid #eee;
+    }
+
+    /* Transform bars to X */
+    .mobile-nav-toggle[aria-expanded="true"] .icon-bar:nth-child(2) {
+        transform: rotate(45deg);
+        top: 2px;
+        background-color: var(--wp--preset--color--blue); /* Keep blue */
+    }
+    
+    .mobile-nav-toggle[aria-expanded="true"] .icon-bar:nth-child(3) {
+        opacity: 0;
+    }
+    
+    
+    .mobile-nav-toggle[aria-expanded="true"] .icon-bar:nth-child(4) {
+        transform: rotate(-45deg);
+        top: -4px;
+        background-color: var(--wp--preset--color--blue);
+    }
+}
+
+/* Header Search Styles */
+.header-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Form Container */
+.header-search .search-form {
+    display: flex;
+    align-items: center;
+    background-color: var(--wp--preset--color--off-white);
+    border-radius: 50px;
+    padding: 2px;
+    transition: all 0.3s ease;
+    width: 44px; /* Initial circle width */
+    height: 44px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* Hover/Focus Expansion */
+.header-search .search-form:hover,
+.header-search .search-form:focus-within {
+    width: 250px; /* Expanded pill width */
+    background-color: var(--wp--preset--color--off-white); /* Keep explicit */
+}
+
+/* Input Field */
+.header-search .search-field {
+    background: transparent;
+    border: none;
+    padding: 0 40px 0 15px; /* Right padding for icon space */
+    width: 100%;
+    height: 100%;
+    font-size: 0.9rem;
+    color: var(--wp--preset--color--navy);
+    opacity: 0;
+    cursor: pointer; /* Pointer when closed */
+    transition: opacity 0.2s ease 0.1s; /* Delay opacity slightly */
+}
+
+.header-search .search-field:focus {
+    outline: none;
+}
+
+/* Show input when expanded */
+.header-search .search-form:hover .search-field,
+.header-search .search-form:focus-within .search-field {
+    opacity: 1;
+    cursor: text;
+}
+
+/* Submit Button / Icon */
+.header-search .search-submit {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wp--preset--color--navy);
+    cursor: pointer;
+    z-index: 2;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+}
+
+.header-search .search-submit:hover {
+    color: var(--wp--preset--color--blue);
+    background-color: #efebeb;
+}
+
+.header-search .search-submit svg {
+    width: 24px;
+    min-width: 24px;
+}
+
+
+/* Mobile Header Widget Logic */
+.mobile-header-widget {
+    display: none; /* Default hidden on desktop */
+}
+
+@media (max-width: 991px) {
+    /* Hide top bar widgets on mobile */
+    .header-top .header-actions .widget {
+        display: none;
+    }
+    
+    /* Ensure search remains visible */
+    .header-top .header-actions .header-search {
+        display: block;
+        margin-left: auto; /* Push to right if alone */
+    }
+
+    /* Show widgets inside mobile menu */
+    .mobile-header-widget {
+        display: block;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid var(--wp--preset--color--off-white);
+        padding-bottom: 1rem;
+    }
+    
+    .mobile-header-widget ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
