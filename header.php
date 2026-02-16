@@ -16,7 +16,6 @@
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 	<?php wp_head(); ?>
 </head>
-
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site">
@@ -24,7 +23,7 @@
 
 	<header id="masthead" class="site-header">
         
-        <!-- Part 1: Top Bar (Logo + Widgets) -->
+        <!-- Part 1: Top Bar (Logo + Widgets) : Desktop -->
         <div class="header-top">
             <div class="container">
                 <div class="site-branding">
@@ -63,28 +62,82 @@
             </div><!-- .container -->
         </div><!-- .header-top -->
 
-        <!-- Part 2: Navigation Bar -->
-		<nav id="site-navigation" class="main-navigation header-bottom">
+        <!-- Navigation: Desktop -->
+         <nav id="site-navigation" class="desktop-header-bottom main-navigation">
             <div class="container">
                 <?php
-                    // Header Right Widget for Mobile (Hidden on Desktop via CSS)
-                    if ( is_active_sidebar( 'header-right' ) ) {
-                        echo '<div class="mobile-header-widget">';
-                        dynamic_sidebar( 'header-right' );
-                        echo '</div>';
-                    }
-
                     wp_nav_menu(
                         array(
                             'theme_location' => 'primary',
                             'menu_id'        => 'primary-menu',
-                            'container'      => false, // We use the nav tag as container
-                            'menu_class'     => 'menu-items',
+                            'container'      => false,
+                            'menu_class'     => 'menu-items desktop-menu',
                         )
                     );
                 ?>
             </div>
-		</nav><!-- #site-navigation -->
+        </nav>
+
+        <!-- Navigation: Mobile -->
+		<div class="mobile-header-bottom">
+            <div class="header-top">
+                <div class="container">
+                    <div class="site-branding">
+                        <?php
+                            if ( has_custom_logo() ) {
+                                the_custom_logo();
+                            } else {
+                                ?>
+                                <h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+                                <?php
+                            }
+                        ?>
+                    </div><!-- .site-branding -->
+
+                    <div class="header-actions">
+                        <?php
+                            // Header Search
+                            if ( get_theme_mod( 'energieburcht_header_search_enable', false ) ) {
+                            ?>
+                            <div class="header-search">
+                                <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
+                                    <input type="text" class="search-field" placeholder="<?php echo esc_attr_x( 'Zoeken...', 'placeholder', 'energieburcht' ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
+                                    <button type="submit" class="search-submit" aria-label="<?php esc_attr_e( 'Search', 'energieburcht' ); ?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    </button>
+                                </form>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div><!-- .header-actions -->
+                </div><!-- .container -->
+            </div><!-- .header-top -->
+            <?php
+                if ( is_active_sidebar( 'header-right' ) ) {
+                    ?>
+                        <div class="mobile-header-right">
+                            <?php dynamic_sidebar( 'header-right' ); ?>
+                        </div>
+                    <?php
+                }
+            ?>
+            <div class="mobile-menu-header">
+                <span class="mobile-menu-title"><?php esc_html_e( 'Menu', 'energieburcht' ); ?></span>
+            </div>
+            <nav id="site-navigation" class="main-navigation">
+                <?php
+                    wp_nav_menu(
+                        array(
+                            'theme_location' => 'primary',
+                            'menu_id'        => 'primary-menu',
+                            'container'      => false,
+                            'menu_class'     => 'menu-items mobile-menu',
+                        )
+                    );
+                ?>
+            </nav>
+		</div><!-- #site-navigation -->
 
 	</header><!-- #masthead -->
 

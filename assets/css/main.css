@@ -2,13 +2,15 @@
  * Main CSS file for Energieburcht theme.
  */
 
+ * {
+    box-sizing: border-box;
+ }
+
 :root {
     --header-height-desktop: 140px;
     --header-top-height: 80px;
 }
 
-/* =Global Layout
--------------------------------------------------------------- */
 /* Global Button Styles */
 .button,
 .wp-block-button__link,
@@ -39,7 +41,6 @@ input[type="reset"]:hover,
 input[type="button"]:hover,
 button:hover {
     color: var(--wp--preset--color--white);
-    opacity: 0.9;
     text-decoration: none;
 }
 
@@ -76,7 +77,6 @@ img {
 .header-top {
     padding: var(--wp--preset--spacing--sm) 0;
     background-color: var(--wp--preset--color--white);
-    z-index: 99;
     position: relative;
 }
 
@@ -124,9 +124,13 @@ img {
     z-index: 90;
 }
 
-.menu-items {
+.desktop-menu {
     box-shadow: 0 .125em .5em rgba(0,0,0,.15);
     border: 1px solid #efefef;
+
+}
+
+.menu-items {
     border-radius: 0.8rem;
     background: #fff;
     display: flex;
@@ -148,24 +152,34 @@ img {
 
 .menu-items a {
     display: inline-block;
-    border: 1px solid #fff;
-    border-radius: .8rem;
     font-family: var(--wp--preset--font-family--mic-32-new);
-    font-weight: 500;
     padding: 9px 15px;
     transition: all .2s ease-in-out;
     text-decoration: none;
     color: var(--wp--preset--color--navy);
+    font-weight: 400;
 }
 
-.menu-items a:hover {
+.menu-items.desktop-menu a {
+    font-weight: 500;
+    border-radius: .8rem;
+}
+
+.menu-items.desktop-menu a {
+    border: 1px solid #fff;
+}
+
+.menu-items.mobile-menu a {
+    width: 100%;
+    display: block;
+}
+
+.menu-items.desktop-menu a:hover {
     border-color: #e0f0f5;
 }
 
 .menu-items .sub-menu {
     position: absolute;
-    top: 100%;
-    left: 0;
     background-color: var(--wp--preset--color--white);
     border: 1px solid #efefef;
     border-radius: 0.8rem;
@@ -191,108 +205,254 @@ img {
     background-color: #e0f0f5;
 }
 
-
-
-.menu-items li:hover .sub-menu {
+.menu-items > li:hover > .sub-menu {
     visibility: visible;
     opacity: 1;
     margin-top: 20px;
 }
 
-/* .main-navigation a:hover,
-.main-navigation .current-menu-item > a {
-    color: var(--wp--preset--color--blue);
-    border-bottom-color: var(--wp--preset--color--blue);
-} */
+.menu-items > li > .sub-menu {
+    top: 100%;
+    left: 0;
+}
+
+.menu-items > li > .sub-menu > li > .sub-menu {
+    top: 0;
+    left: 100%;
+    margin-top: 0;
+    margin-left: 20px;
+}
+
+.menu-items > li > .sub-menu > li:hover > .sub-menu {
+    visibility: visible;
+    opacity: 1;
+}
+
+.menu-items > li.menu-item-has-children > a {
+    position: relative;
+    align-items: center;
+    padding: 9px 15px;
+}
+
+.menu-items.mobile-menu > li.menu-item-has-children {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-items.mobile-menu > li.menu-item-has-children.active {
+    flex-direction: row-reverse;
+    border-top: 1px solid rgba(0, 0, 0, .15);
+}
+
+.menu-items.mobile-menu > li.menu-item-has-children.active > a {
+    opacity: .5;
+}
+
+.menu-items.desktop-menu > li.menu-item-has-children > a {
+    padding: 9px 40px 9px 15px;
+}
+
+.menu-items.desktop-menu > li.menu-item-has-children > a:after {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    content: "";
+    transform: translateY(-50%);
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIGNsYXNzPSJpbmplY3RlZC1zdmciIGRhdGEtc3JjPSJodHRwczovL2Nkbi5odWdlaWNvbnMuY29tL2ljb25zL2Fycm93LWRvd24tMDEtc3Ryb2tlLXN0YW5kYXJkLnN2Zz92PTEuMC4xIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgcm9sZT0iaW1nIiBjb2xvcj0iIzAwYWNkZCI+CjxwYXRoIGQ9Ik01Ljk5OTc3IDkuMDAwMDVMMTEuOTk5OCAxNUwxNy45OTk4IDkiIHN0cm9rZT0iIzAwYWNkZCIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PC9wYXRoPgo8L3N2Zz4=");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 22px;
+    height: 22px;
+}
 
 /* Mobile Toggle - Hidden on Desktop */
 .mobile-nav-toggle {
     display: none;
 }
 
+.mobile-header-bottom {
+    display: none;
+}
+
+.mobile-header-right {
+    padding-left: var(--wp--preset--spacing--md);
+    padding-right: var(--wp--preset--spacing--md);
+    padding-bottom: var(--wp--preset--spacing--sm);
+    display: flex;
+    justify-content: flex-end;
+}
+
+span.menu-arrow-icon {
+    display: inline-flex;
+    width: 50px;
+    min-width: 50px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid rgba(0, 0, 0, .15)
+}
+
+span.menu-arrow-icon.active {
+    border-left: none;
+    border-right: 1px solid rgba(0, 0, 0, .15);
+}
+
+span.menu-arrow-icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: #00acdd;
+}
+
+span.menu-arrow-icon.active svg {
+    transform: rotate(180deg);
+}
+
 /* Desktop Styles */
 @media (min-width: 992px) {
-    .header-bottom {
+    .desktop-header-bottom {
         position: sticky;
         top: 0;
+        z-index: 1000;
+        background-color: var(--wp--preset--color--white);
+        transition: all 0.3s ease;
+        width: 100%;
     }
 }
 
 /* Mobile Styles */
 @media (max-width: 991px) {
-    /* Sticky Top Bar */
 
-    
-    .header-top {
-        position: sticky;
-        top: 0;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    .desktop-header-bottom {
+        display: none;
     }
-    
-    /* Ensure header actions (icons) remain visible but maybe smaller */
+
     .header-actions {
         gap: 0.5rem;
     }
 
-    /* Navigation Overlay */
-    .main-navigation.header-bottom {
+    .mobile-header-bottom {
         position: fixed;
-        top: 0; /* Cover entire screen */
+        top: 0;
         left: 0;
         width: 100%;
         height: 100vh;
-        background-color: var(--wp--preset--color--white);
-        
-        /* Layout logic */
-        padding-top: 80px; /* Space for sticky header top */
-        padding-bottom: 100px; /* Space for bottom button */
-        
-        /* Animation */
-        transform: translateY(100%); /* Slide up from bottom or overlay? */
-        /* Reference implies overlay. Let's do slide up or fade in. */
-        /* User image shows it taking over content below header. */
-        
+        background-color: var(--wp--preset--color--white);    
+        transform: translateY(100%);
         opacity: 0;
         visibility: hidden;
         transition: all 0.3s cubic-bezier(0.77, 0.2, 0.05, 1.0);
-        z-index: 99; /* Below header-top (101) */
+        z-index: 90;
+        overflow-x: hidden; /* Prevent horizontal scroll from sliding menus */
         overflow-y: auto;
         
         border-bottom: none;
+        display: flex;
+        flex-direction: column;
     }
 
-    .main-navigation.toggled {
+    .mobile-header-bottom.toggled {
         transform: translateY(0);
         opacity: 1;
         visibility: visible;
     }
 
+    /* Mobile Menu Header (Label) */
+    .mobile-menu-header {
+        padding: 0 20px;
+        color: rgba(0,0,0,.3);
+        text-align: center;
+        font-size: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, .15);
+        border-bottom: 1px solid rgba(0, 0, 0, .15);
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        
+    }
+
+    .mobile-menu-header.active {
+        display: none;
+    }
+
+    /* Drill-down Menu container */
     .main-navigation .menu-items {
         flex-direction: column;
         align-items: stretch;
         gap: 0;
-        padding: 0 var(--wp--preset--spacing--md);
+        padding: 0;
+        width: 100%;
+        position: relative;
+        transition: transform 0.3s ease;
     }
 
-    .main-navigation .menu-items > li {
+    /* List Items */
+    .main-navigation .menu-items li {
         border-bottom: 1px solid var(--wp--preset--color--off-white);
-    }
-
-    .main-navigation a {
-        padding: 1rem 0;
-        font-size: 1.125rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        width: 100%;
     }
     
-    /* Add chevron indicators for submenus (simulated for now) */
-    .main-navigation .menu-item-has-children > a::after {
-        content: '\203A'; /* Chevron right */
-        font-size: 1.5rem;
-        transform: rotate(90deg); /* Point down? or right? */
-        color: var(--wp--preset--color--blue);
+    /* Arrow Icon (SVG) */
+    .menu-arrow-icon {
+        width: 24px;
+        height: 24px;
+        fill: none;
+        stroke: var(--wp--preset--color--blue);
+        stroke-width: 2;
+        transition: transform 0.2s;
     }
+
+    /* Submenu (Hidden/Slid out by default) */
+    .main-navigation .mobile-menu .sub-menu {
+        margin-top: 1px !important;
+        height: calc(100vh - 80px);
+        background-color: #fff;
+        z-index: 100;
+        padding: 0;
+        box-sizing: border-box;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        opacity: 1;
+        visibility: visible;
+        display: block;
+        border: none;
+        box-shadow: none;
+        overflow-y: auto;
+    }
+    
+    /* Active Submenu */
+    .main-navigation .sub-menu.active {
+        transform: translateX(0);
+    }
+
+    /* Back Button */
+    .menu-back-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 1rem 0;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--wp--preset--color--off-white);
+        background: transparent;
+        border: none;
+        color: var(--wp--preset--color--navy);
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .menu-back-btn svg {
+        transform: rotate(180deg); /* Rotate arrow to point left */
+        width: 20px;
+        height: 20px;
+        stroke: var(--wp--preset--color--blue);
+    }
+
 
     /* Floating Hamburger Button (Fixed Bottom Center) */
     .mobile-nav-toggle {
@@ -300,22 +460,20 @@ img {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        
         position: fixed;
         bottom: 30px;
         left: 50%;
         transform: translateX(-50%);
-        
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        
-        background-color: var(--wp--preset--color--white); /* Default closed */
+        background-color: var(--wp--preset--color--white);
         border: none;
         box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        z-index: 10000; /* Extremely high z-index */
+        z-index: 10000;
         cursor: pointer;
         transition: all 0.3s ease;
+
     }
 
     /* Bars (Hamburger) */
@@ -330,7 +488,7 @@ img {
 
     /* Open State: Button becomes Blue X */
     .mobile-nav-toggle[aria-expanded="true"] {
-        background-color: var(--wp--preset--color--off-white); /* Reference looks light */
+        background-color: var(--wp--preset--color--off-white);
         box-shadow: none;
         border: 1px solid #eee;
     }
@@ -338,18 +496,17 @@ img {
     /* Transform bars to X */
     .mobile-nav-toggle[aria-expanded="true"] .icon-bar:nth-child(2) {
         transform: rotate(45deg);
-        top: 2px;
-        background-color: var(--wp--preset--color--blue); /* Keep blue */
+        top: 6px;
+        background-color: var(--wp--preset--color--blue);
     }
     
     .mobile-nav-toggle[aria-expanded="true"] .icon-bar:nth-child(3) {
         opacity: 0;
     }
     
-    
     .mobile-nav-toggle[aria-expanded="true"] .icon-bar:nth-child(4) {
         transform: rotate(-45deg);
-        top: -4px;
+        top: -6px;
         background-color: var(--wp--preset--color--blue);
     }
 }
@@ -438,6 +595,20 @@ img {
     min-width: 24px;
 }
 
+.mobile-menu.child-nav-open > li {display: none;}
+
+.mobile-menu.child-nav-open > li.menu-item-has-children {
+    display: none;
+}
+
+.mobile-menu.child-nav-open > li.menu-item-has-children.active {
+    display: flex;
+}
+
+.menu-items.mobile-menu a:hover, .menu-items.mobile-menu .menu-arrow-icon:hover {
+    background: rgba(0,0,0,.03);
+    cursor: pointer;
+}
 
 /* Mobile Header Widget Logic */
 .mobile-header-widget {
@@ -450,10 +621,22 @@ img {
         display: none;
     }
     
-    /* Ensure search remains visible */
+    /* Ensure search remains visible and expanded */
     .header-top .header-actions .header-search {
         display: block;
         margin-left: auto; /* Push to right if alone */
+    }
+
+    .header-search .search-form {
+        width: 220px; /* Fixed width for visibility */
+        opacity: 1;
+        cursor: text;
+        background-color: var(--wp--preset--color--off-white);
+    }
+
+    .header-search .search-field {
+        opacity: 1;
+        cursor: text;
     }
 
     /* Show widgets inside mobile menu */
@@ -471,3 +654,207 @@ img {
     }
 }
 
+/* Footer Widgets */
+.footer-widgets-wrapper {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: var(--footer-bg-color, var(--wp--preset--color--navy));
+    color: var(--footer-text-color, var(--wp--preset--color--white));
+}
+
+.footer-widgets-wrapper a {
+    text-decoration: none;
+    color: var(--footer-link-color, var(--wp--preset--color--white));
+}
+
+.footer-widgets-columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--footer-widget-gap, 50px);
+}
+
+.footer-widgets-columns.columns-1 {
+    grid-template-columns: 1fr;
+}
+
+.footer-widgets-columns.columns-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.footer-widgets-columns.columns-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.footer-widgets-columns.columns-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.footer-column {
+    min-width: 0; /* Prevent overflow */
+}
+
+ul#menu-footer-nav {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+ul#menu-footer-nav li {
+    list-style: none;
+}
+
+ul#menu-footer-nav a {
+    display: inline-block;
+    width: 100%;
+    min-width: 100%;
+    background: #00acdd;
+    border-radius: 0.8rem;
+    padding: 10px 12px;
+    font-size: 1rem;
+    line-height: 1.5;
+    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
+    transition: 0.2s;
+}
+
+ul#menu-footer-nav a:hover {
+    background: #26b8e2;
+}
+
+ul#menu-footer-nav a::after {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid currentColor;
+    border-top: 2px solid currentColor;
+    transform: rotate(45deg);
+    float: right;
+    margin-top: 6px;
+}
+
+@media (max-width: 991px) {
+    .footer-widgets-columns {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--footer-widget-gap-tablet, 30px);
+    }
+    
+    .footer-widgets-columns.columns-1 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767px) {
+    .footer-widgets-columns, 
+    .footer-widgets-columns.columns-2,
+    .footer-widgets-columns.columns-3,
+    .footer-widgets-columns.columns-4
+    {
+        grid-template-columns: 1fr;
+        gap: var(--footer-widget-gap-mobile, 20px);
+    }
+}
+
+
+/* Copyright Bar */
+.site-info {
+    background-color: var(--copyright-bg-color, #003449);
+    color: var(--copyright-text-color, #9babae);
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.copyright-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.copyright-text {
+    font-weight: 300;
+    color: var(--copyright-text-color, #9babae);
+}
+
+.copyright-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.copyright-menu ul li {
+    position: relative;
+}
+
+.copyright-menu ul li a {
+    color: var(--copyright-text-color, #9babae);
+    text-decoration: none;
+    font-weight: 300;
+}
+
+/* Add separator | between menu items */
+.copyright-menu ul li:not(:last-child)::after {
+    content: '|';
+    margin-left: 8px;
+    opacity: 0.5;
+}
+
+@media (max-width: 767px) {
+    .copyright-bar {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+    
+    .copyright-menu ul {
+        justify-content: center;
+    }
+}
+
+/* Back to Top Button */
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--back-to-top-bg, #ffffff);
+    color: var(--back-to-top-color, #003449);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease-in-out;
+    z-index: 999;
+    text-decoration: none;
+}
+
+#back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#back-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+#back-to-top .dashicons {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

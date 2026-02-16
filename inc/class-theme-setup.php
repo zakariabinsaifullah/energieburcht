@@ -32,6 +32,7 @@ class Energieburcht_Theme_Setup {
             array(
                 'primary' => esc_html__( 'Primary Menu', 'energieburcht' ),
                 'footer'  => esc_html__( 'Footer Menu', 'energieburcht' ),
+                'copyright-menu' => esc_html__( 'Copyright Menu', 'energieburcht' ),
             )
         );
 

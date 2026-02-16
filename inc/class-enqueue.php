@@ -30,5 +30,14 @@ class Energieburcht_Enqueue {
         if ( file_exists( get_template_directory() . '/assets/js/main.js' ) ) {
             wp_enqueue_script( 'energieburcht-main', get_template_directory_uri() . '/assets/js/main.js', array(), ENERGIEBURCHT_VERSION, true );
         }
+
+        // Enqueue Back to Top JS if enabled.
+        if ( get_theme_mod( 'energieburcht_back_to_top_enable', false ) ) {
+             wp_enqueue_style( 'dashicons' );
+             
+             if ( file_exists( get_template_directory() . '/assets/js/back-to-top.js' ) ) {
+                wp_enqueue_script( 'energieburcht-back-to-top', get_template_directory_uri() . '/assets/js/back-to-top.js', array(), ENERGIEBURCHT_VERSION, true );
+             }
+        }
     }
 }
