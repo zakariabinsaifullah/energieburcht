@@ -11,6 +11,11 @@
     --header-top-height: 80px;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 /* Global Button Styles */
 .button,
 .wp-block-button__link,
@@ -65,12 +70,12 @@ img {
     height: auto;
 }
 
-/* =Header
--------------------------------------------------------------- */
+/* Header */
 .site-header {
     background-color: var(--wp--preset--color--white);
     position: relative;
     z-index: 1000;
+    transition: all .2s ease-in-out;
 }
 
 /* Top Bar */
@@ -119,26 +124,64 @@ img {
 
 
 /* Navigation Bar (Desktop) */
-.header-bottom {
-    background-color: var(--wp--preset--color--white);
+.desktop-header-bottom {
     z-index: 90;
+    width: 100%;
+    transition: box-shadow 0.3s ease;
 }
 
-.desktop-menu {
+.is-sticky .desktop-header-bottom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    animation: slideDown 0.3s ease forwards;
+    margin-top: 20px;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+.desktop-header-bottom .container {
     box-shadow: 0 .125em .5em rgba(0,0,0,.15);
     border: 1px solid #efefef;
+    border-radius: 0.8rem;
+    background: #fff;
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--wp--preset--spacing--lg);
+}
 
+.sticky-logo {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all .2s ease-in-out;
+}
+
+.sticky-logo .custom-logo {
+    max-height: 60px;
+    width: auto;
+}
+
+.is-sticky .sticky-logo {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
 }
 
 .menu-items {
-    border-radius: 0.8rem;
-    background: #fff;
     display: flex;
     margin: 0;
+    padding: 0;
     justify-content: flex-start;
     gap: var(--wp--preset--spacing--lg);
-    padding: 15px;
-    box-sizing: border-box;
     flex-direction: row;
     align-items: center;
     width: 100%;
@@ -307,18 +350,6 @@ span.menu-arrow-icon svg {
 
 span.menu-arrow-icon.active svg {
     transform: rotate(180deg);
-}
-
-/* Desktop Styles */
-@media (min-width: 992px) {
-    .desktop-header-bottom {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        background-color: var(--wp--preset--color--white);
-        transition: all 0.3s ease;
-        width: 100%;
-    }
 }
 
 /* Mobile Styles */
@@ -858,3 +889,5 @@ ul#menu-footer-nav a::after {
     justify-content: center;
     align-items: center;
 }
+
+

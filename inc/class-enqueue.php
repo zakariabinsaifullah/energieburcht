@@ -28,7 +28,7 @@ class Energieburcht_Enqueue {
 
         // Enqueue main JS file if it exists.
         if ( file_exists( get_template_directory() . '/assets/js/main.js' ) ) {
-            wp_enqueue_script( 'energieburcht-main', get_template_directory_uri() . '/assets/js/main.js', array(), ENERGIEBURCHT_VERSION, true );
+            wp_enqueue_script( 'energieburcht-main', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), ENERGIEBURCHT_VERSION, true );
         }
 
         // Enqueue Back to Top JS if enabled.

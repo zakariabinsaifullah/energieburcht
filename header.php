@@ -21,6 +21,7 @@
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'energieburcht' ); ?></a>
 
+    <!-- Main Header -->
 	<header id="masthead" class="site-header">
         
         <!-- Part 1: Top Bar (Logo + Widgets) : Desktop -->
@@ -63,8 +64,15 @@
         </div><!-- .header-top -->
 
         <!-- Navigation: Desktop -->
-         <nav id="site-navigation" class="desktop-header-bottom main-navigation">
+        <nav id="site-navigation" class="desktop-header-bottom main-navigation">
             <div class="container">
+                <div class="sticky-logo">
+                    <?php
+                        if ( has_custom_logo() ) {
+                            the_custom_logo();
+                        }
+                    ?>
+                </div>
                 <?php
                     wp_nav_menu(
                         array(
