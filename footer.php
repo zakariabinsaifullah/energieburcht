@@ -93,8 +93,11 @@ $copyright_text_color = get_theme_mod( 'energieburcht_copyright_text_color' );
         $copyright_text = get_theme_mod( 'energieburcht_copyright_text', '[copyright] Energieburcht - [year]' );
         
         // Process placeholders
+        // Replace [copyright] token with the © entity and [year] with the
+        // current 4-digit year. gmdate() is used instead of date() because
+        // WordPress expects timezone-agnostic date functions in theme code.
         $copyright_text = str_replace( '[copyright]', '&copy;', $copyright_text );
-        $copyright_text = str_replace( '[year]', date( 'Y' ), $copyright_text );
+        $copyright_text = str_replace( '[year]', gmdate( 'Y' ), $copyright_text );
         ?>
 		<div class="site-info">
             <div class="container">

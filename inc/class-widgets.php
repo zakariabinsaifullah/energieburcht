@@ -1,88 +1,100 @@
 <?php
 /**
- * Widget Registration Class
+ * Widget Areas Class
  *
- * @package energieburcht
+ * Registers all sidebar / widget areas used throughout the theme. Each area
+ * corresponds to a distinct layout region — one header area and up to four
+ * footer columns.
+ *
+ * @package Energieburcht
+ * @since   1.0.0
  */
 
-class Energieburcht_Widgets {
+// Prevent direct file access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
-        add_action( 'widgets_init', array( $this, 'init' ) );
-    }
+/**
+ * Class Energieburcht_Widgets
+ */
+final class Energieburcht_Widgets {
 
-    /**
-     * Register widget areas.
-     */
-    public function init() {
-        // Header Right
-        register_sidebar(
-            array(
-                'name'          => esc_html__( 'Header Right', 'energieburcht' ),
-                'id'            => 'header-right',
-                'description'   => esc_html__( 'Add widgets here for the top right header area (Search, CTA, Language).', 'energieburcht' ),
-                'before_widget' => '<section id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</section>',
-                'before_title'  => '<h2 class="screen-reader-text">',
-                'after_title'   => '</h2>',
-            )
-        );
+	/**
+	 * Single shared instance of this class.
+	 *
+	 * @var Energieburcht_Widgets|null
+	 */
+	private static $instance = null;
 
-        // Footer Column 1
-        register_sidebar(
-            array(
-                'name'          => esc_html__( 'Footer Column 1', 'energieburcht' ),
-                'id'            => 'footer-1',
-                'description'   => esc_html__( 'Add widgets here for the first footer column.', 'energieburcht' ),
-                'before_widget' => '<section id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</section>',
-                'before_title'  => '<h2 class="widget-title">',
-                'after_title'   => '</h2>',
-            )
-        );
+	// =========================================================================
+	// Singleton boilerplate
+	// =========================================================================
 
-        // Footer Column 2
-        register_sidebar(
-            array(
-                'name'          => esc_html__( 'Footer Column 2', 'energieburcht' ),
-                'id'            => 'footer-2',
-                'description'   => esc_html__( 'Add widgets here for the second footer column.', 'energieburcht' ),
-                'before_widget' => '<section id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</section>',
-                'before_title'  => '<h2 class="widget-title">',
-                'after_title'   => '</h2>',
-            )
-        );
+	/**
+	 * Private constructor — obtain the instance via get_instance().
+	 */
+	private function __construct() {
+		add_action( 'widgets_init', array( $this, 'register_sidebars' ) );
+	}
 
-        // Footer Column 3
-        register_sidebar(
-            array(
-                'name'          => esc_html__( 'Footer Column 3', 'energieburcht' ),
-                'id'            => 'footer-3',
-                'description'   => esc_html__( 'Add widgets here for the third footer column.', 'energieburcht' ),
-                'before_widget' => '<section id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</section>',
-                'before_title'  => '<h2 class="widget-title">',
-                'after_title'   => '</h2>',
-            )
-        );
+	/**
+	 * Return (or lazily create) the single shared instance.
+	 *
+	 * @return static
+	 */
+	public static function get_instance() {
+		if ( null === static::$instance ) {
+			static::$instance = new static();
+		}
 
-        // Footer Column 4
-        register_sidebar(
-            array(
-                'name'          => esc_html__( 'Footer Column 4', 'energieburcht' ),
-                'id'            => 'footer-4',
-                'description'   => esc_html__( 'Add widgets here for the fourth footer column.', 'energieburcht' ),
-                'before_widget' => '<section id="%1$s" class="widget %2$s">',
-                'after_widget'  => '</section>',
-                'before_title'  => '<h2 class="widget-title">',
-                'after_title'   => '</h2>',
-            )
-        );
+		return static::$instance;
+	}
 
+	/** Cloning is forbidden on a singleton. */
+	private function __clone() {}
 
-    }
+	// =========================================================================
+	// Widget area registration
+	// =========================================================================
+
+	/**
+	 * Register all theme widget areas.
+	 *
+	 * @return void
+	 */
+	public function register_sidebars(): void {
+
+		// ── Header right ──────────────────────────────────────────────────────
+		register_sidebar(
+			array(
+				'name'          => esc_html__( 'Header Right', 'energieburcht' ),
+				'id'            => 'header-right',
+				'description'   => esc_html__( 'Widgets displayed in the top-right of the header (e.g. search, CTA, language switcher).', 'energieburcht' ),
+				'before_widget' => '<section id="%1$s" class="widget %2$s">',
+				'after_widget'  => '</section>',
+				'before_title'  => '<h2 class="screen-reader-text">',
+				'after_title'   => '</h2>',
+			)
+		);
+
+		// ── Footer columns (1 – 4) ────────────────────────────────────────────
+		// Using a loop avoids repetitive register_sidebar() calls and makes it
+		// trivial to add or remove columns in the future.
+		for ( $column = 1; $column <= 4; $column++ ) {
+			register_sidebar(
+				array(
+					/* translators: %d: Column number (1–4). */
+					'name'          => sprintf( esc_html__( 'Footer Column %d', 'energieburcht' ), $column ),
+					'id'            => 'footer-' . $column,
+					/* translators: %d: Column number (1–4). */
+					'description'   => sprintf( esc_html__( 'Widgets for footer column %d.', 'energieburcht' ), $column ),
+					'before_widget' => '<section id="%1$s" class="widget %2$s">',
+					'after_widget'  => '</section>',
+					'before_title'  => '<h2 class="widget-title">',
+					'after_title'   => '</h2>',
+				)
+			);
+		}
+	}
 }

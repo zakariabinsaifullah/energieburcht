@@ -1,43 +1,130 @@
 <?php
 /**
- * Enqueue Class
+ * Asset Enqueueing Class
  *
- * @package energieburcht
+ * Manages the registration and enqueueing of all front-end stylesheets and
+ * JavaScript files. Conditional assets (e.g. back-to-top) are only loaded
+ * when the corresponding Customizer setting is active.
+ *
+ * @package Energieburcht
+ * @since   1.0.0
  */
 
-class Energieburcht_Enqueue {
+// Prevent direct file access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
-        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-    }
+/**
+ * Class Energieburcht_Enqueue
+ */
+final class Energieburcht_Enqueue {
 
-    /**
-     * Enqueue scripts and styles.
-     */
-    public function enqueue_scripts() {
-        // Enqueue the main stylesheet.
-        wp_enqueue_style( 'energieburcht-style', get_stylesheet_uri(), array(), ENERGIEBURCHT_VERSION );
+	/**
+	 * Single shared instance of this class.
+	 *
+	 * @var Energieburcht_Enqueue|null
+	 */
+	private static $instance = null;
 
-        // Enqueue main CSS file if it exists.
-        if ( file_exists( get_template_directory() . '/assets/css/main.css' ) ) {
-            wp_enqueue_style( 'energieburcht-main-css', get_template_directory_uri() . '/assets/css/main.css', array(), ENERGIEBURCHT_VERSION );
-        }
+	// =========================================================================
+	// Singleton boilerplate
+	// =========================================================================
 
-        // Enqueue main JS file if it exists.
-        if ( file_exists( get_template_directory() . '/assets/js/main.js' ) ) {
-            wp_enqueue_script( 'energieburcht-main', get_template_directory_uri() . '/assets/js/main.js', array('jquery'), ENERGIEBURCHT_VERSION, true );
-        }
+	/**
+	 * Private constructor — obtain the instance via get_instance().
+	 */
+	private function __construct() {
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+	}
 
-        // Enqueue Back to Top JS if enabled.
-        if ( get_theme_mod( 'energieburcht_back_to_top_enable', false ) ) {
-             wp_enqueue_style( 'dashicons' );
-             
-             if ( file_exists( get_template_directory() . '/assets/js/back-to-top.js' ) ) {
-                wp_enqueue_script( 'energieburcht-back-to-top', get_template_directory_uri() . '/assets/js/back-to-top.js', array(), ENERGIEBURCHT_VERSION, true );
-             }
-        }
-    }
+	/**
+	 * Return (or lazily create) the single shared instance.
+	 *
+	 * @return static
+	 */
+	public static function get_instance() {
+		if ( null === static::$instance ) {
+			static::$instance = new static();
+		}
+
+		return static::$instance;
+	}
+
+	/** Cloning is forbidden on a singleton. */
+	private function __clone() {}
+
+	// =========================================================================
+	// Asset loading
+	// =========================================================================
+
+	/**
+	 * Entry point hooked to `wp_enqueue_scripts`.
+	 *
+	 * Delegates to private helpers to keep each concern isolated.
+	 *
+	 * @return void
+	 */
+	public function enqueue_assets(): void {
+		$this->enqueue_styles();
+		$this->enqueue_scripts();
+	}
+
+	/**
+	 * Register and enqueue front-end stylesheets.
+	 *
+	 * @return void
+	 */
+	private function enqueue_styles(): void {
+
+		// Root style.css — required by WordPress for theme identification.
+		wp_enqueue_style(
+			'energieburcht-style',
+			get_stylesheet_uri(),
+			array(),
+			ENERGIEBURCHT_VERSION
+		);
+
+		// Main compiled stylesheet — only enqueued when the file exists on disk.
+		if ( file_exists( ENERGIEBURCHT_DIR . 'assets/css/main.css' ) ) {
+			wp_enqueue_style(
+				'energieburcht-main',
+				ENERGIEBURCHT_URI . 'assets/css/main.css',
+				array( 'energieburcht-style' ),
+				ENERGIEBURCHT_VERSION
+			);
+		}
+	}
+
+	/**
+	 * Register and enqueue front-end JavaScript files.
+	 *
+	 * @return void
+	 */
+	private function enqueue_scripts(): void {
+
+		// Primary theme script: mobile nav, sticky header. Loaded in footer,
+		// depends on the jQuery bundled with WordPress.
+		wp_enqueue_script(
+			'energieburcht-main',
+			ENERGIEBURCHT_URI . 'assets/js/main.js',
+			array( 'jquery' ),
+			ENERGIEBURCHT_VERSION,
+			true // Load in footer.
+		);
+
+		// Back-to-top button — conditionally loaded based on Customizer setting.
+		if ( get_theme_mod( 'energieburcht_back_to_top_enable', false ) ) {
+			// Dashicons is needed for the arrow icon inside the button.
+			wp_enqueue_style( 'dashicons' );
+
+			wp_enqueue_script(
+				'energieburcht-back-to-top',
+				ENERGIEBURCHT_URI . 'assets/js/back-to-top.js',
+				array(),
+				ENERGIEBURCHT_VERSION,
+				true // Load in footer.
+			);
+		}
+	}
 }

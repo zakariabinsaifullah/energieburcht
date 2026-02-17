@@ -64,7 +64,7 @@
         </div><!-- .header-top -->
 
         <!-- Navigation: Desktop -->
-        <nav id="site-navigation" class="desktop-header-bottom main-navigation">
+        <nav id="site-navigation" class="desktop-header-bottom main-navigation" aria-label="<?php esc_attr_e( 'Primary navigation', 'energieburcht' ); ?>">
             <div class="container">
                 <div class="sticky-logo">
                     <?php
@@ -133,19 +133,20 @@
             <div class="mobile-menu-header">
                 <span class="mobile-menu-title"><?php esc_html_e( 'Menu', 'energieburcht' ); ?></span>
             </div>
-            <nav id="site-navigation" class="main-navigation">
+            <!-- Mobile nav uses a distinct ID to avoid duplicate-ID HTML validation errors. -->
+            <nav id="mobile-site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Mobile navigation', 'energieburcht' ); ?>">
                 <?php
                     wp_nav_menu(
                         array(
                             'theme_location' => 'primary',
-                            'menu_id'        => 'primary-menu',
+                            'menu_id'        => 'mobile-primary-menu',
                             'container'      => false,
                             'menu_class'     => 'menu-items mobile-menu',
                         )
                     );
                 ?>
             </nav>
-		</div><!-- #site-navigation -->
+		</div><!-- .mobile-header-bottom -->
 
 	</header><!-- #masthead -->
 
