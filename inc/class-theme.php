@@ -99,6 +99,8 @@ final class Energieburcht_Theme {
 			'enqueue'    => Energieburcht_Enqueue::get_instance(),
 			'widgets'    => Energieburcht_Widgets::get_instance(),
 			'customizer' => Energieburcht_Customizer::get_instance(),
+			'post_types'    => Energieburcht_Post_Types::get_instance(),
+			'page_settings' => Energieburcht_Page_Settings::get_instance(),
 		);
 	}
 

@@ -12,9 +12,34 @@ $footer_bg_color   = get_theme_mod( 'energieburcht_footer_bg_color' );
 $footer_text_color = get_theme_mod( 'energieburcht_footer_text_color' );
 $footer_link_color = get_theme_mod( 'energieburcht_footer_link_color' );
 
-$footer_gap_desktop = get_theme_mod( 'energieburcht_footer_gap_desktop', 50 );
-$footer_gap_tablet  = get_theme_mod( 'energieburcht_footer_gap_tablet', 30 );
-$footer_gap_mobile  = get_theme_mod( 'energieburcht_footer_gap_mobile', 20 );
+$footer_gap_data = get_theme_mod( 'energieburcht_footer_gap' );
+$footer_gap_desktop = 50;
+$footer_gap_tablet  = 30;
+$footer_gap_mobile  = 20;
+$footer_gap_unit    = 'px';
+
+// Parse the JSON data from the new control
+if ( $footer_gap_data ) {
+	// If it's a JSON string, decode it
+	if ( is_string( $footer_gap_data ) ) {
+		$decoded = json_decode( $footer_gap_data, true );
+		if ( is_array( $decoded ) ) {
+			$footer_gap_data = $decoded;
+		}
+	}
+	
+	if ( is_array( $footer_gap_data ) ) {
+		$footer_gap_desktop = isset( $footer_gap_data['desktop'] ) && '' !== $footer_gap_data['desktop'] ? $footer_gap_data['desktop'] : $footer_gap_desktop;
+		$footer_gap_tablet  = isset( $footer_gap_data['tablet'] ) && '' !== $footer_gap_data['tablet'] ? $footer_gap_data['tablet'] : $footer_gap_tablet;
+		$footer_gap_mobile  = isset( $footer_gap_data['mobile'] ) && '' !== $footer_gap_data['mobile'] ? $footer_gap_data['mobile'] : $footer_gap_mobile;
+		$footer_gap_unit    = isset( $footer_gap_data['unit'] ) ? $footer_gap_data['unit'] : 'px';
+	}
+} else {
+    // Fallback/Migration: Try to get old individual values if the new one hasn't been saved yet
+	$footer_gap_desktop = get_theme_mod( 'energieburcht_footer_gap_desktop', 50 );
+	$footer_gap_tablet  = get_theme_mod( 'energieburcht_footer_gap_tablet', 30 );
+	$footer_gap_mobile  = get_theme_mod( 'energieburcht_footer_gap_mobile', 20 );
+}
 
 $style = '';
 if ( $footer_bg_color ) {
@@ -27,13 +52,13 @@ if ( $footer_link_color ) {
     $style .= '--footer-link-color: ' . esc_attr( $footer_link_color ) . ';';
 }
 if ( '' !== $footer_gap_desktop ) {
-    $style .= '--footer-widget-gap: ' . intval( $footer_gap_desktop ) . 'px;';
+    $style .= '--footer-widget-gap: ' . intval( $footer_gap_desktop ) . esc_attr( $footer_gap_unit ) . ';';
 }
 if ( '' !== $footer_gap_tablet ) {
-    $style .= '--footer-widget-gap-tablet: ' . intval( $footer_gap_tablet ) . 'px;';
+    $style .= '--footer-widget-gap-tablet: ' . intval( $footer_gap_tablet ) . esc_attr( $footer_gap_unit ) . ';';
 }
 if ( '' !== $footer_gap_mobile ) {
-    $style .= '--footer-widget-gap-mobile: ' . intval( $footer_gap_mobile ) . 'px;';
+    $style .= '--footer-widget-gap-mobile: ' . intval( $footer_gap_mobile ) . esc_attr( $footer_gap_unit ) . ';';
 }
 
 $copyright_text_color = get_theme_mod( 'energieburcht_copyright_text_color' );

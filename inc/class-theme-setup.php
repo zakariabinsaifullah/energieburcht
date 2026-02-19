@@ -110,6 +110,9 @@ final class Energieburcht_Theme_Setup {
 		add_theme_support( 'editor-styles' );
 		add_editor_style( 'assets/css/editor-style.css' );
 
+		// Enable wide and full alignments.
+		add_theme_support( 'align-wide' );
+
 		// ── Navigation menu locations ─────────────────────────────────────────
 		register_nav_menus(
 			array(
@@ -118,5 +121,11 @@ final class Energieburcht_Theme_Setup {
 				'copyright-menu' => esc_html__( 'Copyright Menu', 'energieburcht' ),
 			)
 		);
+
+		// Add support for excerpts on pages.
+		add_post_type_support( 'page', 'excerpt' );
+
+		// Add support for page templates.
+		add_theme_support( 'page-templates' );
 	}
 }

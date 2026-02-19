@@ -65,9 +65,14 @@ function energieburcht_autoloader( string $class_name ): void {
 	// standard naming convention (e.g. custom Customizer controls live in a
 	// dedicated sub-directory).
 	$class_map = array(
-		'Energieburcht_Customize_Editor_Control' => ENERGIEBURCHT_DIR . 'inc/controls/class-control-editor.php',
-		'Energieburcht_Customize_Range_Control'  => ENERGIEBURCHT_DIR . 'inc/controls/class-control-range.php',
-	);
+		'Energieburcht_Customize_Alpha_Color_Control'      => ENERGIEBURCHT_DIR . 'inc/controls/class-control-alpha-color.php',
+		'Energieburcht_Customize_Editor_Control'           => ENERGIEBURCHT_DIR . 'inc/controls/class-control-editor.php',
+		'Energieburcht_Customize_Palette_Color_Control'    => ENERGIEBURCHT_DIR . 'inc/controls/class-control-palette-color.php',
+		'Energieburcht_Customize_Range_Control'            => ENERGIEBURCHT_DIR . 'inc/controls/class-control-range.php',
+			'Energieburcht_Customize_Responsive_Range_Control' => ENERGIEBURCHT_DIR . 'inc/controls/class-control-responsive-range.php',
+			'Energieburcht_Customize_Separator_Control'        => ENERGIEBURCHT_DIR . 'inc/controls/class-control-separator.php',
+			'Energieburcht_Customize_Typography_Control'       => ENERGIEBURCHT_DIR . 'inc/controls/class-control-typography.php',
+		);
 
 	if ( isset( $class_map[ $class_name ] ) ) {
 		require_once $class_map[ $class_name ];
