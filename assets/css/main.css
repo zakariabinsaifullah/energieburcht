@@ -607,7 +607,7 @@
 
 /* Menu Arrow Icon (Base) */
 span.menu-arrow-icon {
-    display: inline-flex;
+    display: none; /* Hidden by default, shown on mobile via JS */
     width: 50px;
     min-width: 50px;
     height: 42px;
@@ -2269,6 +2269,10 @@ span.menu-arrow-icon.active svg {
     }
 
     /* Mobile Menu Links */
+    span.menu-arrow-icon {
+        display: inline-flex;
+    }
+    
     .menu-items.mobile-menu a {
         width: 100%;
         display: block;
@@ -2526,5 +2530,466 @@ span.menu-arrow-icon.active svg {
         flex-direction: column;
         align-items: center;
         text-align: center;
+    }
+
+}
+
+/* ==========================================================================
+   10. Search Results (search.php)
+   ========================================================================== */
+
+/* ── Hero ── */
+.search-results-hero {
+    background-color: #003449;
+    padding: 80px 0;
+    position: relative;
+}
+
+.search-results-hero .page-hero-title {
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+}
+
+.search-results-hero__query {
+    color: #00acdd;
+}
+
+.search-form label {
+    flex: 1;
+}
+
+input.search-field {
+    width: 100%;
+}
+
+/* Reuse the header search form inside the hero with a wider, lighter look */
+.search-results-hero__form .search-form {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50px;
+    padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+    max-width: 540px;
+    gap: 0.5rem;
+}
+
+.search-results-hero__form .search-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+.search-results-hero__form .search-field::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.search-results-hero__form .search-submit {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00acdd;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.search-results-hero__form .search-submit:hover {
+    background-color: #0095c0;
+}
+
+/* ── Results count ── */
+.search-results-count {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+/* ── Results grid (3 columns, mirrors kennisitems-grid) ── */
+.search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* ── Single result card (mirrors kennisitems-item) ── */
+.search-result-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.search-result-item:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    transform: translateY(-3px);
+}
+
+/* ── Thumbnail ── */
+.search-result-thumbnail {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+}
+
+.search-result-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease-in-out;
+}
+
+.search-result-item:hover .search-result-thumbnail img {
+    transform: scale(1.04);
+}
+
+/* ── Content ── */
+.search-result-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.5rem;
+    gap: 0.75rem;
+}
+
+/* ── Post-type badge (mirrors projecten-cat-tag) ── */
+.search-result-type-tag {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 4px 8px;
+    border-radius: 0.8rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background-color: #e0f0f5;
+    color: #003449;
+}
+
+/* ── Title ── */
+.search-result-title {
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.search-result-title a {
+    color: #003449;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+.search-result-title a:hover {
+    color: #00acdd;
+}
+
+/* ── Excerpt ── */
+.search-result-excerpt {
+    color: #212529;
+    font-size: var(--eb-typography-body);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.search-result-excerpt p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── Read-more link (outline, mirrors kennisitems-read-more) ── */
+.search-result-read-more {
+    align-self: flex-start;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55em 1.1em;
+    border-radius: 0.4em;
+    font-size: var(--eb-typography-button, 1rem);
+    font-weight: 400;
+    text-decoration: none;
+    background-color: transparent;
+    color: #00acdd;
+    border: 1px solid #00acdd;
+    transition: background-color 0.2s ease-in-out,
+                color 0.2s ease-in-out,
+                border-color 0.2s ease-in-out;
+}
+
+.search-result-read-more::after {
+    content: '\2192';
+    display: inline-block;
+    margin-left: 0.45em;
+    color: currentColor;
+    transition: transform 0.2s ease-in-out;
+}
+
+.search-result-read-more:hover {
+    background-color: #00acdd;
+    color: #ffffff;
+    border-color: #00acdd;
+}
+
+.search-result-read-more:hover::after {
+    transform: translateX(4px);
+}
+
+/* ── Pagination (mirrors projecten-pagination) ── */
+.search-results-pagination {
+    margin-top: 2.5rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.search-results-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 0.6rem;
+    border-radius: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #003449;
+    background-color: #f0f4f8;
+    border: 1px solid #e0e6ec;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+.search-results-pagination .page-numbers:hover,
+.search-results-pagination .page-numbers.current {
+    background-color: #00acdd;
+    color: #ffffff;
+    border-color: #00acdd;
+}
+
+.search-results-pagination__arrow {
+    font-size: 1rem;
+}
+
+/* ── No-results state ── */
+.search-no-results {
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.search-no-results__message {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+}
+
+.search-no-results .search-form {
+    display: flex;
+    align-items: center;
+    background-color: #f0f4f8;
+    border: 1px solid #e0e6ec;
+    border-radius: 50px;
+    padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+    gap: 0.5rem;
+}
+
+.search-no-results .search-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #003449;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+.search-no-results .search-submit {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00acdd;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.search-no-results .search-submit:hover {
+    background-color: #0095c0;
+}
+
+/* ==========================================================================
+   11. 404 Page (404.php)
+   ========================================================================== */
+
+/* ── Hero ── */
+.error-404-hero {
+    background-color: #003449;
+    padding: 80px 0;
+}
+
+.error-404-hero__code {
+    font-size: clamp(5rem, 10vw, 10rem);
+    font-weight: 800;
+    line-height: 1;
+    color: rgba(0, 172, 221, 0.25);
+    margin: 0 0 0.25rem;
+    letter-spacing: -0.04em;
+}
+
+.error-404-hero__title {
+    color: #ffffff;
+    margin: 0 0 1rem;
+}
+
+.error-404-hero__subtitle {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 1.05rem;
+    margin: 0;
+    max-width: 520px;
+}
+
+/* ── Body ── */
+.error-404-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    padding-top: 1rem;
+}
+
+/* ── Search box ── */
+.error-404-search__heading,
+.error-404-links__heading {
+    font-size: 1.2rem;
+    color: #003449;
+    margin: 0 0 0.5rem;
+}
+
+.error-404-search__description {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin: 0 0 1.25rem;
+}
+
+.error-404-search .search-form {
+    display: flex;
+    align-items: center;
+    background-color: #f0f4f8;
+    border: 1px solid #e0e6ec;
+    border-radius: 50px;
+    padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+    gap: 0.5rem;
+}
+
+.error-404-search .search-field {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #003449;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+.error-404-search .search-field::placeholder {
+    color: #adb5bd;
+}
+
+.error-404-search .search-submit {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00acdd;
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    padding: 0.55rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.error-404-search .search-submit:hover {
+    background-color: #0095c0;
+}
+
+/* ── Quick links ── */
+.error-404-links__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.error-404-links__list li a {
+    display: inline-flex;
+    align-items: center;
+    color: #003449;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: color 0.15s ease-in-out;
+}
+
+.error-404-links__list li a::before {
+    content: '\2192';
+    margin-right: 0.5em;
+    color: #00acdd;
+    transition: transform 0.2s ease-in-out;
+}
+
+.error-404-links__list li a:hover {
+    color: #00acdd;
+}
+
+.error-404-links__list li a:hover::before {
+    transform: translateX(4px);
+}
+
+/* ── Responsive overrides for sections 10 & 11 ──
+   These must live AFTER the base rules to win the cascade.        */
+@media (max-width: 991px) {
+    .search-results-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .search-results-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .search-results-hero,
+    .error-404-hero {
+        padding: 60px 0;
+    }
+
+    .error-404-body {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .error-404-hero__code {
+        font-size: clamp(5rem, 20vw, 8rem);
     }
 }
