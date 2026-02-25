@@ -14,94 +14,46 @@
  *    6.2. Footer Navigation
  *    6.3. Copyright Bar
  * 7. Components & Utilities
- * 8. Responsive Styles
- *    8.1. Tablet & Mobile (max-width: 991px)
- *    8.2. Medium Screens (max-width: 768px)
- *    8.3. Mobile Screens (max-width: 767px)
+ * 8. Page Settings
+ *    8.0. Breadcrumbs
+ * 9. Responsive Styles
+ *    9.1. Tablet & Mobile (max-width: 991px)
+ *    9.2. Medium Screens (max-width: 768px)
+ *    9.3. Mobile Screens (max-width: 767px)
  */
 
-/* ==========================================================================
-   1. Reset & Global Styles
-   ========================================================================== */
+ #team, #werkwijze, #certificeringen, #open {
+    scroll-margin-top: 90px;
+ }
 
-* {
-    box-sizing: border-box;
-}
-
-:root {
-    --header-height-desktop: 140px;
-    --header-top-height: 80px;
-}
-
-body {
-    overflow-x: hidden; /* Prevent horizontal scroll */
-}
-
-body.menu-open {
-    overflow: hidden; /* Lock scroll when menu is open */
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-a {
-    color: var(--eb-link-color);
-}
-
-a:hover {
-    color: var(--eb-link-hover-color);
-}
-
-/* ==========================================================================
-   2. Typography & Buttons
-   ========================================================================== */
-
-/* Global Button Styles */
-.button,
-.wp-block-button__link,
-input[type="submit"],
-input[type="reset"],
-input[type="button"],
-button {
-    border-radius: 0.8rem;
-    box-shadow: none;
-    font-size: 1rem;
-    font-weight: 400;
-    font-family: var(--wp--preset--font-family--system-sans);
-    background-color: var(--eb-btn-bg);
-    color: var(--eb-btn-color);
-    border: none;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-block;
-    line-height: 1.5;
-}
-
-.button:hover,
-.wp-block-button__link:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-input[type="button"]:hover,
-button:hover {
-    background-color: var(--eb-btn-hover-bg);
-    color: var(--eb-btn-hover-color);
-    text-decoration: none;
-}
 
 /* ==========================================================================
    3. Layout & Grid
    ========================================================================== */
 
+   html {
+    scroll-behavior: smooth;
+   }
+
 .container {
     max-width: var(--wp--style--global--content-size);
     margin-left: auto;
     margin-right: auto;
-    padding-left: var(--wp--preset--spacing--md);
-    padding-right: var(--wp--preset--spacing--md);
+    padding-left: var(--eb-edge-gap, 15px);
+    padding-right: var(--eb-edge-gap, 15px);
+}
+
+/* Narrow Container — 60 % of the container, used by the "Narrow Container" page template */
+.narrow-container {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 768px) {
+    .narrow-container {
+        max-width: 100%;
+    }
 }
 
 /* Gutenberg Alignments */
@@ -117,6 +69,11 @@ button:hover {
 	margin-right: -100px;
 	max-width: 100vw;
 	width: auto;
+}
+
+.boxed-content {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
 }
 
 /* ==========================================================================
@@ -171,6 +128,31 @@ button:hover {
     align-items: center;
 }
 
+/* Header CTAs */
+.header-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.8rem;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: var(--cta-color);
+    background-color: var(--cta-bg);
+    min-width: fit-content;
+}
+
+.header-cta-secondary {
+    border: 1px solid currentColor;
+}
+
+.header-cta:hover {
+    color: var(--cta-hover-color);
+    background-color: var(--cta-hover-bg);
+}
+
 /* 4.2. Header Search */
 .header-search {
     position: relative;
@@ -209,7 +191,7 @@ button:hover {
     width: 100%;
     height: 100%;
     font-size: 0.9rem;
-    color: var(--eb-header-search-text, var(--eb-navy));
+    color: var(--eb-header-search-text, #003449);
     opacity: 0;
     cursor: pointer; /* Pointer when closed */
     transition: opacity 0.2s ease 0.1s; /* Delay opacity slightly */
@@ -238,7 +220,7 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--eb-header-search-icon, var(--eb-navy));
+    color: var(--eb-header-search-icon, #003449);
     cursor: pointer;
     z-index: 2;
     transition: all 0.3s ease;
@@ -263,6 +245,8 @@ button:hover {
     z-index: 90;
     width: 100%;
     transition: box-shadow 0.3s ease;
+    padding-left: var(--eb-edge-gap, 15px);
+    padding-right: var(--eb-edge-gap, 15px);
 }
 
 .is-sticky .desktop-header-bottom {
@@ -291,7 +275,7 @@ button:hover {
     gap: var(--wp--preset--spacing--lg);
 }
 
-.sticky-logo {
+.sticky-logo, .sticky-cta {
     display: none;
     opacity: 0;
     visibility: hidden;
@@ -299,13 +283,15 @@ button:hover {
     transition: all .2s ease-in-out;
 }
 
+
+
 .sticky-logo .custom-logo {
     max-height: var(--eb-logo-width, 60px);
     min-width: var(--eb-logo-width, 60px);
     width: auto;
 }
 
-.is-sticky .sticky-logo {
+.is-sticky .sticky-logo, .is-sticky .sticky-cta {
     display: block;
     opacity: 1;
     visibility: visible;
@@ -318,7 +304,7 @@ button:hover {
     margin: 0;
     padding: 0;
     justify-content: flex-start;
-    gap: var(--wp--preset--spacing--lg);
+    gap: 15px;
     flex-direction: row;
     align-items: center;
     width: 100%;
@@ -432,15 +418,19 @@ button:hover {
 
 /* 6.1. Widgets */
 .footer-widgets-wrapper {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    background-color: var(--footer-bg-color, var(--eb-navy));
-    color: var(--footer-text-color, var(--eb-white));
+    padding-top: 100px;
+    padding-bottom: 100px;
+    background-color: var(--footer-bg-color, #003449);
+    color: var(--footer-text-color, #a5aab1);
+}
+
+.widget-title {
+    color: var(--footer-title-color, #fff);
 }
 
 .footer-widgets-wrapper a {
     text-decoration: none;
-    color: var(--footer-link-color, var(--eb-white));
+    color: var(--footer-link-color, #a5aab1);
 }
 
 .footer-widgets-columns {
@@ -462,59 +452,47 @@ button:hover {
 }
 
 .footer-widgets-columns.columns-4 {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 2fr repeat(3, 1fr);
+}
+
+.footer-widgets-columns.columns-5 {
+    grid-template-columns: 2fr repeat(4, 1fr);
 }
 
 .footer-column {
     min-width: 0; /* Prevent overflow */
 }
 
+.widget-title, .is-style-widget-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
 /* 6.2. Footer Navigation */
-ul#menu-footer-nav {
+.widget_nav_menu ul {
     margin: 0;
     padding: 0;
+    list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0.75rem;
 }
 
-ul#menu-footer-nav li {
-    list-style: none;
+.widget_nav_menu ul li a {
+    color: var(--footer-link-color, #a5aab1);
+    font-size: 15px;
 }
 
-ul#menu-footer-nav a {
-    display: inline-block;
-    width: 100%;
-    min-width: 100%;
-    background: #00acdd;
-    border-radius: 0.8rem;
-    padding: 10px 12px;
-    font-size: 1rem;
-    line-height: 1.5;
-    box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
-    transition: 0.2s;
+.widget_nav_menu ul li a:hover {
+    color: var(--footer-link-hover-color, #fff);
 }
 
-ul#menu-footer-nav a:hover {
-    background: #26b8e2;
-}
-
-ul#menu-footer-nav a::after {
-    content: '';
-    display: block;
-    width: 6px;
-    height: 6px;
-    border-right: 2px solid currentColor;
-    border-top: 2px solid currentColor;
-    transform: rotate(45deg);
-    float: right;
-    margin-top: 6px;
-}
 
 /* 6.3. Copyright Bar */
 .site-info {
-    background-color: var(--copyright-bg-color, var(--eb-navy));
-    color: var(--copyright-text-color, var(--eb-light-gray));
+    background-color: var(--copyright-bg-color, #003449);
+    color: var(--copyright-text-color, #9BABAE);
     padding: 20px 0;
     font-size: 14px;
 }
@@ -529,7 +507,7 @@ ul#menu-footer-nav a::after {
 
 .copyright-text {
     font-weight: 300;
-    color: var(--copyright-text-color, var(--eb-light-gray));
+    color: var(--copyright-text-color, #9BABAE);
 }
 
 .copyright-menu ul {
@@ -546,9 +524,13 @@ ul#menu-footer-nav a::after {
 }
 
 .copyright-menu ul li a {
-    color: var(--copyright-text-color, var(--eb-light-gray));
+    color: var(--copyright-text-color, #9BABAE);
     text-decoration: none;
     font-weight: 300;
+}
+
+.copyright-menu ul li a:hover {
+    color: var(--copyright-link-hover-color, #ffffff);
 }
 
 /* Add separator | between menu items */
@@ -569,8 +551,8 @@ ul#menu-footer-nav a::after {
     right: 20px;
     width: 40px;
     height: 40px;
-    background-color: var(--back-to-top-bg, var(--eb-white));
-    color: var(--back-to-top-color, var(--eb-navy));
+    background-color: var(--back-to-top-bg, #ffffff);
+    color: var(--back-to-top-color, #003449);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -649,12 +631,1545 @@ span.menu-arrow-icon.active svg {
     transform: rotate(180deg);
 }
 
+/*
+============================================================================
+   8. Page Settings
+   ====================================================================== */
+.page-hero {
+    margin-top: 1.5rem;
+}
+
+.page-hero-cta {
+    margin-top: 1.5rem;
+}
+
 /* ==========================================================================
-   8. Responsive Styles
+   8.0. Breadcrumbs
    ========================================================================== */
 
-/* 8.1. Tablet & Mobile (max-width: 991px) */
+.eb-breadcrumbs-wrap {
+    padding: 1rem 0;
+    background-color: transparent;
+}
+
+.eb-breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8125rem;
+    color: #6c757d;
+}
+
+/* Yoast outputs <span> elements with class="breadcrumb_last" for the active crumb */
+.eb-breadcrumbs a {
+    color: #6c757d;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.eb-breadcrumbs a:hover {
+    color: #00acdd;
+    text-decoration: underline;
+}
+
+/* Separator injected by Yoast between items */
+.eb-breadcrumbs .breadcrumb_last {
+    color: #003449;
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   8.1. Projecten Archive
+   ========================================================================== */
+   
+/* ── Category filter bar ── */
+.projecten-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.projecten-filter-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 0.8rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    cursor: pointer;
+    border: 1px solid var(--projecten-filter-border, #EFEFEF);
+    background-color: var(--projecten-filter-bg, #f0f4f8);
+    color: var(--projecten-filter-color, #003449);
+    transition: background-color 0.15s ease-in-out,
+                color 0.15s ease-in-out,
+                border-color 0.15s ease-in-out;
+}
+
+.projecten-filter-btn:hover,
+.projecten-filter-btn.is-active {
+    background-color: var(--projecten-filter-active-bg, #00acdd);
+    color: var(--projecten-filter-active-color, #ffffff);
+    border-color: var(--projecten-filter-active-border, #00acdd);
+}
+
+/* ── Category tag on card ── */
+.projecten-cat-tag {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 4px 8px;
+    border-radius: 0.8rem;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background-color: var(--projecten-cat-bg, #e0f0f5);
+    color: var(--projecten-cat-color, #003449);
+}
+
+/* ── Grid loading state ── */
+.projecten-grid.is-loading {
+    opacity: 0.45;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* ── CSS custom-property defaults (overridden per-page via inline <style>) ── */
+.archive-projecten {
+    --projecten-item-bg:              #ffffff;
+    --projecten-title-color:          #003449;
+    --projecten-excerpt-color:        #212529;
+    --projecten-btn-color:            #ffffff;
+    --projecten-btn-bg:               #00acdd;
+    --projecten-btn-hover-color:      #ffffff;
+    --projecten-btn-hover-bg:         #0095c0;
+    --projecten-cat-color:            #003449;
+    --projecten-cat-bg:               #e0f0f5;
+    --projecten-filter-color:         #003449;
+    --projecten-filter-bg:            #f0f4f8;
+    --projecten-filter-border:        #003449;
+    --projecten-filter-active-color:  #ffffff;
+    --projecten-filter-active-bg:     #00acdd;
+    --projecten-filter-active-border: #00acdd;
+}
+
+/* ── Project grid ── */
+.projecten-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-top: 3rem;
+}
+
+/* ── Project card ── */
+.projecten-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--projecten-item-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.projecten-item:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    transform: translateY(-3px);
+}
+
+/* ── Thumbnail ── */
+.projecten-thumbnail {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+}
+
+.projecten-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease-in-out;
+}
+
+.projecten-item:hover .projecten-thumbnail img {
+    transform: scale(1.04);
+}
+
+/* ── Content area ── */
+.projecten-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.5rem;
+    gap: 0.75rem;
+}
+
+/* ── Title ── */
+.projecten-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.projecten-title a {
+    color: var(--projecten-title-color);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+.projecten-title a:hover {
+    color: var(--projecten-btn-bg);
+}
+
+/* ── Excerpt ── */
+.projecten-excerpt {
+    color: var(--projecten-excerpt-color);
+    font-size: var(--eb-typography-body);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.projecten-excerpt p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── Read-more button ── */
+.projecten-read-more {
+    align-self: flex-start;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 0.55em 1.1em;
+    border-radius: 0.4em;
+    font-size: var(--eb-typography-button, 1rem);
+    font-weight: 400;
+    text-decoration: none;
+    background-color: var(--projecten-btn-bg);
+    color: var(--projecten-btn-color);
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+/* Arrow injected after the label — color tracks the button text via currentColor */
+.projecten-read-more::after {
+    content: '\2192';
+    display: inline-block;
+    margin-left: 0.45em;
+    color: currentColor;
+    transition: transform 0.2s ease-in-out;
+}
+
+.projecten-read-more:hover {
+    background-color: var(--projecten-btn-hover-bg);
+    color: var(--projecten-btn-hover-color);
+}
+
+.projecten-read-more:hover::after {
+    transform: translateX(4px);
+}
+
+/* ── Numeric pagination ── */
+.projecten-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    padding-bottom: 1rem;
+    gap: 0.5rem;
+}
+
+.projecten-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.6rem;
+    border-radius: 0.35rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--projecten-title-color, var(--eb-navy));
+    background-color: transparent;
+    border: 1px solid transparent;
+    transition: background-color 0.15s ease-in-out,
+                color 0.15s ease-in-out,
+                border-color 0.15s ease-in-out;
+}
+
+.projecten-pagination .page-numbers:hover {
+    background-color: var(--projecten-btn-bg, var(--eb-blue));
+    color: var(--projecten-btn-color, #fff);
+    border-color: var(--projecten-btn-bg, var(--eb-blue));
+}
+
+.projecten-pagination .page-numbers.current {
+    background-color: var(--projecten-btn-bg, var(--eb-blue));
+    color: var(--projecten-btn-color, #fff);
+    border-color: var(--projecten-btn-bg, var(--eb-blue));
+    cursor: default;
+}
+
+.projecten-pagination .page-numbers.dots {
+    border-color: transparent;
+    background: transparent;
+    cursor: default;
+    letter-spacing: 0.05em;
+}
+
+/* Prev / next as icon-only pills */
+.projecten-pagination .prev.page-numbers,
+.projecten-pagination .next.page-numbers {
+    font-size: 1.1rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--projecten-btn-bg, var(--eb-blue));
+    color: var(--projecten-btn-bg, var(--eb-blue));
+}
+
+.projecten-pagination .prev.page-numbers:hover,
+.projecten-pagination .next.page-numbers:hover {
+    background-color: var(--projecten-btn-bg, var(--eb-blue));
+    color: var(--projecten-btn-color, #fff);
+}
+
+.projecten-pagination__arrow {
+    line-height: 1;
+}
+
+
+/* ==========================================================================
+   8.2. Single Projecten
+   ========================================================================== */
+
+/* ── CSS variable defaults (card colours reused in related section) ── */
+.single-projecten {
+    --projecten-item-bg:         #ffffff;
+    --projecten-title-color:     #003449;
+    --projecten-excerpt-color:   #212529;
+    --projecten-btn-color:       #ffffff;
+    --projecten-btn-bg:          #00acdd;
+    --projecten-btn-hover-color: #ffffff;
+    --projecten-btn-hover-bg:    #0095c0;
+    --projecten-cat-color:       #003449;
+    --projecten-cat-bg:          #e0f0f5;
+}
+
+/* ── Hero — container-width featured image ── */
+.single-projecten-hero {
+    position: relative;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    min-height: 420px;
+    display: flex;
+    align-items: flex-end;
+    margin-top: 2rem;
+}
+
+/* Gradient: opaque black at bottom → fully transparent at top */
+.single-projecten-hero__gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.80) 0%,
+        rgba(0, 0, 0, 0.25) 45%,
+        transparent 100%
+    );
+    z-index: 1;
+}
+
+/* Title row anchored to the bottom of the image */
+.single-projecten-hero__content {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    margin: 0 auto 15px;
+}
+
+.single-projecten-hero__title {
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* ── Body — narrow content wrapper (~90% of container) ── */
+.single-projecten-wrap {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ── Two-column layout: content 75% + sidebar 25% ── */
+.single-projecten-layout {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+/* ── Sidebar widget spacing ── */
+.single-projecten-sidebar .widget {
+    margin-bottom: 2rem;
+}
+
+.single-projecten-sidebar .widget:last-child {
+    margin-bottom: 0;
+}
+
+.single-projecten-sidebar .widget-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--projecten-btn-bg, #00acdd);
+}
+
+/* ── Related projects section ── */
+.related-projecten {
+    /* background-color set inline from Customizer; fallback here */
+    background-color: var(--related-bg, #f8f9fa);
+    padding: 4rem 0;
+}
+
+.related-projecten__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.related-projecten__title {
+    margin: 0;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--related-title-color, #003449);
+}
+
+.related-projecten__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--related-btn-color, #00acdd);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease-in-out;
+}
+
+.related-projecten__more:hover {
+    color: var(--related-btn-hover-color, #0095c0);
+}
+
+.related-projecten__more-arrow {
+    font-size: 1.1em;
+    line-height: 1;
+    transition: transform 0.2s ease-in-out;
+}
+
+.related-projecten__more:hover .related-projecten__more-arrow {
+    transform: translateX(4px);
+}
+
+/* Related grid — header provides spacing so no extra top padding needed */
+.related-projecten__grid {
+    padding-top: 0;
+}
+
+
+/* ==========================================================================
+   8.3. Kennisitems Archive
+   ========================================================================== */
+
+/* ── CSS custom-property defaults (overridden per-page via inline <style>) ── */
+.archive-kennisitems {
+    --kennisitems-item-bg:              #ffffff;
+    --kennisitems-title-color:          #003449;
+    --kennisitems-excerpt-color:        #212529;
+    --kennisitems-btn-color:            #00acdd;
+    --kennisitems-btn-hover-color:      #ffffff;
+    --kennisitems-btn-hover-bg:         #00acdd;
+    --kennisitems-cat-title-color:      #003449;
+    --kennisitems-cat-link-color:       #00acdd;
+    --kennisitems-cat-link-hover-color: #0095c0;
+}
+
+/* ── Category section — spacing between rows ── */
+/* .kennisitems-categorie-section {
+    padding-top: 3rem;
+} */
+
+.kennisitems-categorie-section + .kennisitems-categorie-section {
+    margin-top: 5rem;
+}
+
+/* ── Category header — two-column: title left, link right ── */
+.kennisitems-categorie-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+}
+
+.kennisitems-cat-title {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    color: var(--kennisitems-cat-title-color, #003449);
+}
+
+.kennisitems-cat-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--kennisitems-cat-link-color, #00acdd);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s ease-in-out;
+}
+
+.kennisitems-cat-more:hover {
+    color: var(--kennisitems-cat-link-hover-color, #0095c0);
+}
+
+.kennisitems-cat-more__arrow {
+    font-size: 1.1em;
+    line-height: 1;
+    transition: transform 0.2s ease-in-out;
+}
+
+.kennisitems-cat-more:hover .kennisitems-cat-more__arrow {
+    transform: translateX(4px);
+}
+
+/* ── Grid ── */
+.kennisitems-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+/* ── Card ── */
+.kennisitems-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--kennisitems-item-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.kennisitems-item:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    transform: translateY(-3px);
+}
+
+/* ── Thumbnail (optional — only rendered when the post has one) ── */
+.kennisitems-thumbnail {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+}
+
+.kennisitems-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease-in-out;
+}
+
+.kennisitems-item:hover .kennisitems-thumbnail img {
+    transform: scale(1.04);
+}
+
+/* ── Content area ── */
+.kennisitems-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.5rem;
+    gap: 0.75rem;
+}
+
+/* ── Title ── */
+.kennisitems-title {
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.kennisitems-title a {
+    color: var(--kennisitems-title-color);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+.kennisitems-title a:hover {
+    color: var(--kennisitems-btn-color);
+}
+
+/* ── Excerpt ── */
+.kennisitems-excerpt {
+    color: var(--kennisitems-excerpt-color);
+    font-size: var(--eb-typography-body);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.kennisitems-excerpt p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── Read-more button (outline style) ── */
+.kennisitems-read-more {
+    align-self: flex-start;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 0.55em 1.1em;
+    border-radius: 0.4em;
+    font-size: var(--eb-typography-button, 1rem);
+    font-weight: 400;
+    text-decoration: none;
+    background-color: transparent;
+    color: var(--kennisitems-btn-color);
+    border: 1px solid var(--kennisitems-btn-color);
+    transition: background-color 0.2s ease-in-out,
+                color 0.2s ease-in-out,
+                border-color 0.2s ease-in-out;
+}
+
+/* Arrow injected after label — tracks button text colour via currentColor */
+.kennisitems-read-more::after {
+    content: '\2192';
+    display: inline-block;
+    margin-left: 0.45em;
+    color: currentColor;
+    transition: transform 0.2s ease-in-out;
+}
+
+.kennisitems-read-more:hover {
+    background-color: var(--kennisitems-btn-hover-bg);
+    color: var(--kennisitems-btn-hover-color);
+    border-color: var(--kennisitems-btn-hover-bg);
+}
+
+.kennisitems-read-more:hover::after {
+    transform: translateX(4px);
+}
+
+
+/* ==========================================================================
+   8.4. Single Kennisitems
+   ========================================================================== */
+
+/* ── CSS variable defaults (overridden by the inline <style> block in template) */
+.single-kennisitems {
+    --ki-social-color:       #003449;
+    --ki-social-bg:          #f0f4f8;
+    --ki-social-hover-color: #ffffff;
+    --ki-social-hover-bg:    #00acdd;
+    --ki-toc-bg:             #f8f9fa;
+    --ki-toc-title-color:    #003449;
+    --ki-toc-link-color:     #003449;
+    --ki-toc-active-color:   #00acdd;
+    --ki-author-bg:          #f8f9fa;
+    --ki-author-name-color:  #003449;
+    --ki-author-bio-color:   #212529;
+}
+
+/* ── Outer wrapper — 90 % of the container ── */
+.single-kennisitems-wrap {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+/* ── Three-column grid ──────────────────────────────────────────────────── */
+.single-kennisitems-body {
+    display: grid;
+    grid-template-columns: 100px 1fr 300px;
+    gap: 4rem;
+    align-items: start;
+}
+
+/* When social share is hidden — drop first column */
+.single-kennisitems-body.no-social {
+    grid-template-columns: 1fr 240px;
+}
+
+/* When TOC is hidden — drop third column */
+.single-kennisitems-body.no-toc {
+    grid-template-columns: 56px 1fr;
+}
+
+/* Both hidden */
+.single-kennisitems-body.no-social.no-toc {
+    grid-template-columns: 1fr;
+}
+
+/* ── Col 1: Social share ────────────────────────────────────────────────── */
+.single-kennisitems-social {
+    position: sticky;
+    top: 250px; /* below sticky header */
+}
+
+.ki-social-share {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.ki-social-share__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--ki-social-bg);
+    color: var(--ki-social-color);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.ki-social-share__btn:hover {
+    background-color: var(--ki-social-hover-bg);
+    color: var(--ki-social-hover-color);
+    transform: translateY(-2px);
+}
+
+.ki-social-share__btn svg {
+    display: block;
+    pointer-events: none;
+}
+
+/* ── Col 2: Main content ────────────────────────────────────────────────── */
+.single-kennisitems-content {
+    min-width: 0; /* prevent grid blowout */
+}
+
+.single-kennisitems-title {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: var(--eb-typography-h1, clamp(2rem, 4vw, 2.75rem));
+    line-height: 1.2;
+    color: #003449;
+}
+
+/* Post meta: category badge + date */
+.ki-post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+}
+
+.ki-post-meta__cat {
+    display: inline-block;
+    padding: 0.2em 0.75em;
+    border-radius: 2em;
+    background-color: #e8f4fb;
+    color: #003449;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.ki-post-meta__date {
+    color: #6c757d;
+}
+
+/* Featured image */
+.ki-featured-image {
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.ki-featured-image__img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Entry content */
+.ki-entry-content {
+    font-size: var(--eb-typography-body, 1rem);
+    line-height: 1.75;
+    color: #212529;
+}
+
+.ki-entry-content h2,
+.ki-entry-content h3,
+.ki-entry-content h4 {
+    scroll-margin-top: 90px; /* for anchor links to account for fixed header */
+}
+
+.ki-entry-content p {
+    margin-bottom: 1.25rem;
+}
+
+.ki-entry-content ul,
+.ki-entry-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.ki-entry-content li {
+    margin-bottom: 0.4rem;
+}
+
+.ki-entry-content a {
+    color: #00acdd;
+    text-decoration: underline;
+}
+
+.ki-entry-content a:hover {
+    color: #0095c0;
+}
+
+.ki-entry-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.375rem;
+}
+
+/* ── Author box ─────────────────────────────────────────────────────────── */
+.ki-author-box {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    background-color: var(--ki-author-bg);
+    border-radius: 0.5rem;
+}
+
+.ki-author-box__avatar img {
+    border-radius: 50%;
+    display: block;
+    flex-shrink: 0;
+}
+
+.ki-author-box__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ki-author-box__name {
+    margin: 0 0 0.4rem;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ki-author-name-color);
+}
+
+.ki-author-box__bio {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--ki-author-bio-color);
+}
+
+/* ── Col 3: Table of contents ───────────────────────────────────────────── */
+.single-kennisitems-toc {
+    position: sticky;
+    top: 120px;
+}
+
+.ki-toc {
+    background-color: var(--ki-toc-bg);
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    overflow: hidden;
+}
+
+.ki-toc__title {
+    margin: 0 0 0.875rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ki-toc-title-color);
+}
+
+.ki-toc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ki-toc__item {
+    margin-bottom: 0.3rem;
+}
+
+.ki-toc__item--sub {
+    padding-left: 1rem;
+}
+
+.ki-toc__link {
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--ki-toc-link-color);
+    text-decoration: none;
+    padding: 0.2rem 0;
+    border-left: 2px solid transparent;
+    padding-left: 0.6rem;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.ki-toc__link:hover {
+    color: var(--ki-toc-active-color);
+}
+
+.ki-toc__link.is-active {
+    color: var(--ki-toc-active-color);
+    border-left-color: var(--ki-toc-active-color);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Single Post (global single.php)
+   ========================================================================== */
+
+.single-post {
+    --sp-social-color:       #003449;
+    --sp-social-bg:          #f0f4f8;
+    --sp-social-hover-color: #ffffff;
+    --sp-social-hover-bg:    #00acdd;
+    --sp-toc-bg:             #f8f9fa;
+    --sp-toc-title-color:    #003449;
+    --sp-toc-link-color:     #003449;
+    --sp-toc-active-color:   #00acdd;
+    --sp-author-bg:          #f8f9fa;
+    --sp-author-name-color:  #003449;
+    --sp-author-bio-color:   #212529;
+}
+
+/* ── Outer wrapper ── */
+.single-post-wrap {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+/* ── Three-column grid ── */
+.single-post-body {
+    display: grid;
+    grid-template-columns: 100px 1fr 300px;
+    gap: 4rem;
+    align-items: start;
+}
+
+.single-post-body.no-social {
+    grid-template-columns: 1fr 240px;
+}
+
+.single-post-body.no-toc {
+    grid-template-columns: 56px 1fr;
+}
+
+.single-post-body.no-social.no-toc {
+    grid-template-columns: 1fr;
+}
+
+/* ── Col 1: Social share ── */
+.single-post-social {
+    position: sticky;
+    top: 250px;
+}
+
+.sp-social-share {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    align-items: center;
+}
+
+.sp-social-share__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: var(--sp-social-bg);
+    color: var(--sp-social-color);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+.sp-social-share__btn:hover {
+    background-color: var(--sp-social-hover-bg);
+    color: var(--sp-social-hover-color);
+    transform: translateY(-2px);
+}
+
+.sp-social-share__btn svg {
+    display: block;
+    pointer-events: none;
+}
+
+/* ── Col 2: Main content ── */
+.single-post-content {
+    min-width: 0;
+}
+
+.single-post-title {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-size: var(--eb-typography-h1, clamp(2rem, 4vw, 2.75rem));
+    line-height: 1.2;
+    color: #003449;
+}
+
+.sp-post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+}
+
+.sp-post-meta__cat {
+    display: inline-block;
+    padding: 0.2em 0.75em;
+    border-radius: 2em;
+    background-color: #e8f4fb;
+    color: #003449;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.sp-post-meta__date {
+    color: #6c757d;
+}
+
+.sp-featured-image {
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.sp-featured-image__img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.sp-entry-content {
+    font-size: var(--eb-typography-body, 1rem);
+    line-height: 1.75;
+    color: #212529;
+}
+
+.sp-entry-content h2,
+.sp-entry-content h3,
+.sp-entry-content h4 {
+    scroll-margin-top: 90px;
+}
+
+.sp-entry-content p {
+    margin-bottom: 1.25rem;
+}
+
+.sp-entry-content ul,
+.sp-entry-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.sp-entry-content li {
+    margin-bottom: 0.4rem;
+}
+
+.sp-entry-content a {
+    color: #00acdd;
+    text-decoration: underline;
+}
+
+.sp-entry-content a:hover {
+    color: #0095c0;
+}
+
+.sp-entry-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.375rem;
+}
+
+/* ── Author box ── */
+.sp-author-box {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    background-color: var(--sp-author-bg);
+    border-radius: 0.5rem;
+}
+
+.sp-author-box__avatar img {
+    border-radius: 50%;
+    display: block;
+    flex-shrink: 0;
+}
+
+.sp-author-box__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sp-author-box__name {
+    margin: 0 0 0.4rem;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--sp-author-name-color);
+}
+
+.sp-author-box__bio {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--sp-author-bio-color);
+}
+
+/* ── Col 3: Table of contents ── */
+.single-post-toc {
+    position: sticky;
+    top: 120px;
+}
+
+.sp-toc {
+    background-color: var(--sp-toc-bg);
+    border-radius: 0.5rem;
+    padding: 1.25rem 1.5rem;
+    overflow: hidden;
+}
+
+.sp-toc__title {
+    margin: 0 0 0.875rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sp-toc-title-color);
+}
+
+.sp-toc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sp-toc__item {
+    margin-bottom: 0.3rem;
+}
+
+.sp-toc__item--sub {
+    padding-left: 1rem;
+}
+
+.sp-toc__link {
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    color: var(--sp-toc-link-color);
+    text-decoration: none;
+    padding: 0.2rem 0.6rem;
+    border-left: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.sp-toc__link:hover {
+    color: var(--sp-toc-active-color);
+}
+
+.sp-toc__link.is-active {
+    color: var(--sp-toc-active-color);
+    border-left-color: var(--sp-toc-active-color);
+    font-weight: 600;
+}
+
+/* ── Related kennisitems section ────────────────────────────────────────── */
+.related-kennisitems {
+    padding: 4rem 0;
+    margin-top: 2rem;
+}
+
+.related-kennisitems__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.related-kennisitems__title {
+    margin: 0;
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    color: var(--ki-related-title-color, #003449);
+    line-height: 1.2;
+}
+
+.related-kennisitems__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ki-related-btn-color, #00acdd);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.related-kennisitems__more:hover {
+    color: var(--ki-related-btn-hover-color, #0095c0);
+}
+
+.related-kennisitems__more-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.related-kennisitems__more:hover .related-kennisitems__more-arrow {
+    transform: translateX(4px);
+}
+
+.related-kennisitems__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+}
+
+/* ==========================================================================
+   8.3. Taxonomy Archive
+   ========================================================================== */
+
+/* ── CSS variable defaults ── */
+.archive-taxonomy {
+    --tax-item-bg:          #ffffff;
+    --tax-title-color:      #003449;
+    --tax-excerpt-color:    #212529;
+    --tax-btn-color:        #ffffff;
+    --tax-btn-bg:           #00acdd;
+    --tax-btn-hover-color:  #ffffff;
+    --tax-btn-hover-bg:     #0095c0;
+    --tax-pag-color:        #003449;
+    --tax-pag-active-color: #ffffff;
+    --tax-pag-active-bg:    #00acdd;
+}
+
+/* ── Archive meta row (result count) ── */
+.tax-archive-meta {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--eb-off-white, #efefef);
+    margin-bottom: 0;
+}
+
+.tax-archive-count {
+    font-size: 0.9375rem;
+    color: var(--tax-excerpt-color);
+    font-weight: 500;
+}
+
+/* ── 3-column grid ── */
+.tax-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding-top: 2rem;
+}
+
+/* ── Card ── */
+.tax-item {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--tax-item-bg);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.tax-item:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+    transform: translateY(-3px);
+}
+
+/* ── Thumbnail ── */
+.tax-thumbnail {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+}
+
+.tax-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease-in-out;
+}
+
+.tax-item:hover .tax-thumbnail img {
+    transform: scale(1.04);
+}
+
+/* ── Content area ── */
+.tax-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.5rem;
+    gap: 0.75rem;
+}
+
+/* ── Title ── */
+.tax-title {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.tax-title a {
+    color: var(--tax-title-color);
+    text-decoration: none;
+    transition: color 0.15s ease-in-out;
+}
+
+.tax-title a:hover {
+    color: var(--tax-btn-bg);
+}
+
+/* ── Excerpt ── */
+.tax-excerpt {
+    color: var(--tax-excerpt-color);
+    font-size: var(--eb-typography-body);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.tax-excerpt p:last-child {
+    margin-bottom: 0;
+}
+
+/* ── Read-more button ── */
+.tax-read-more {
+    align-self: flex-start;
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 0.55em 1.1em;
+    border-radius: 0.4em;
+    font-size: var(--eb-typography-button, 1rem);
+    font-weight: 400;
+    text-decoration: none;
+    background-color: var(--tax-btn-bg);
+    color: var(--tax-btn-color);
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.tax-read-more::after {
+    content: '\2192';
+    display: inline-block;
+    margin-left: 0.45em;
+    color: currentColor;
+    transition: transform 0.2s ease-in-out;
+}
+
+.tax-read-more:hover {
+    background-color: var(--tax-btn-hover-bg);
+    color: var(--tax-btn-hover-color);
+}
+
+.tax-read-more:hover::after {
+    transform: translateX(4px);
+}
+
+/* ── Numeric pagination ── */
+.tax-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    padding-bottom: 1rem;
+    gap: 0.5rem;
+}
+
+.tax-pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.6rem;
+    border-radius: 0.35rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--tax-pag-color, var(--eb-navy));
+    background-color: transparent;
+    border: 1px solid transparent;
+    transition: background-color 0.15s ease-in-out,
+                color 0.15s ease-in-out,
+                border-color 0.15s ease-in-out;
+}
+
+.tax-pagination .page-numbers:hover {
+    background-color: var(--tax-pag-active-bg, var(--eb-blue));
+    color: var(--tax-pag-active-color, #fff);
+    border-color: var(--tax-pag-active-bg, var(--eb-blue));
+}
+
+.tax-pagination .page-numbers.current {
+    background-color: var(--tax-pag-active-bg, var(--eb-blue));
+    color: var(--tax-pag-active-color, #fff);
+    border-color: var(--tax-pag-active-bg, var(--eb-blue));
+    cursor: default;
+}
+
+.tax-pagination .page-numbers.dots {
+    border-color: transparent;
+    background: transparent;
+    cursor: default;
+    letter-spacing: 0.05em;
+}
+
+.tax-pagination .prev.page-numbers,
+.tax-pagination .next.page-numbers {
+    font-size: 1.1rem;
+    padding: 0 0.75rem;
+    border: 1px solid var(--tax-pag-active-bg, var(--eb-blue));
+    color: var(--tax-pag-active-bg, var(--eb-blue));
+}
+
+.tax-pagination .prev.page-numbers:hover,
+.tax-pagination .next.page-numbers:hover {
+    background-color: var(--tax-pag-active-bg, var(--eb-blue));
+    color: var(--tax-pag-active-color, #fff);
+}
+
+.tax-pagination__arrow {
+    line-height: 1;
+}
+
+/* ── Pagination wrapper with total count ── */
+.tax-pagination-wrap {
+    margin-top: 3rem;
+    padding-bottom: 1rem;
+}
+
+.tax-pagination-info {
+    text-align: center;
+    font-size: 0.875rem;
+    color: var(--tax-excerpt-color);
+    margin: 0 0 0.75rem;
+}
+
+/* Reset spacing on the nav when it lives inside the wrap */
+.tax-pagination-wrap .tax-pagination {
+    margin-top: 0;
+    padding-bottom: 0;
+}
+
+/* ==========================================================================
+   9. Responsive Styles
+   ========================================================================== */
+
+/* 9.1. Tablet & Mobile (max-width: 991px) */
 @media (max-width: 991px) {
+
+    /* Projecten grid — 2 columns on tablet */
+    .projecten-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Kennisitems grid — 2 columns on tablet */
+    .kennisitems-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Taxonomy archive grid — 2 columns on tablet */
+    .tax-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Single Projecten — stack sidebar below content on tablet */
+    .single-projecten-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .single-projecten-wrap {
+        max-width: 100%;
+    }
+
+    .single-projecten-hero {
+        min-height: 320px;
+    }
+
+    /* Single Post — hide social + TOC, show full-width content */
+    .single-post-body,
+    .single-post-body.no-social,
+    .single-post-body.no-toc,
+    .single-post-body.no-social.no-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .single-post-social,
+    .single-post-toc {
+        display: none;
+    }
+
+    .single-post-wrap {
+        max-width: 100%;
+    }
+
+    /* Single Kennisitems — hide social + TOC, show full-width content */
+    .single-kennisitems-body,
+    .single-kennisitems-body.no-social,
+    .single-kennisitems-body.no-toc,
+    .single-kennisitems-body.no-social.no-toc {
+        grid-template-columns: 1fr;
+    }
+
+    .single-kennisitems-social,
+    .single-kennisitems-toc {
+        display: none;
+    }
+
+    .single-kennisitems-wrap {
+        max-width: 100%;
+    }
+
+    /* Related kennisitems — 2 columns on tablet */
+    .related-kennisitems__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
     /* Footer Columns */
     .footer-widgets-columns {
@@ -677,38 +2192,15 @@ span.menu-arrow-icon.active svg {
 
     /* Header Widgets & Search */
     /* Hide top bar widgets on mobile */
-    .header-top .header-actions .widget {
+    .header-top .header-actions .widget, .header-top .header-search, .header-top .header-actions .header-cta-secondary {
         display: none;
-    }
-    
-    /* Ensure search remains visible and expanded */
-    .header-top .header-actions .header-search {
-        display: block;
-        margin-left: auto; /* Push to right if alone */
-    }
-
-    .header-search .search-form {
-        width: 100%;
-        opacity: 1;
-        cursor: text;
-        background-color: var(--eb-header-search-bg, var(--eb-off-white));
-    }
-
-    .header-search .search-field {
-        opacity: 1;
-        cursor: text;
-    }
-
-    .header-search .search-form:hover,
-    .header-search .search-form:focus-within {
-        width: 100% !important;
     }
 
     /* Show widgets inside mobile menu */
     .mobile-header-widget {
         display: block;
         margin-bottom: 2rem;
-        border-bottom: 1px solid var(--eb-off-white);
+        border-bottom: 1px solid #ffffff;
         padding-bottom: 1rem;
     }
     
@@ -938,7 +2430,7 @@ span.menu-arrow-icon.active svg {
     }
 }
 
-/* 8.2. Medium Screens (max-width: 768px) */
+/* 9.2. Medium Screens (max-width: 768px) */
 @media (max-width: 768px) {
 	.alignwide {
 		margin-left: 0;
@@ -947,13 +2439,73 @@ span.menu-arrow-icon.active svg {
 	}
 }
 
-/* 8.3. Mobile Screens (max-width: 767px) */
+/* 9.3. Mobile Screens (max-width: 767px) */
 @media (max-width: 767px) {
+
+    /* Projecten grid — single column on mobile */
+    .projecten-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    /* Kennisitems grid — single column on mobile */
+    .kennisitems-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    /* Taxonomy archive grid — single column on mobile */
+    .tax-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .tax-archive-hero {
+        padding: 60px 0;
+    }
+
+    .kennisitems-categorie-section {
+        padding-top: 2rem;
+    }
+
+    .projecten-archive-hero {
+        padding: 60px 0;
+    }
+
+    /* Single Projecten — compact hero on mobile */
+    .single-projecten-hero {
+        min-height: 240px;
+        border-radius: 0.4rem;
+    }
+
+    .related-projecten {
+        padding: 2.5rem 0;
+    }
+
+    /* Related kennisitems — single column on mobile */
+    .related-kennisitems__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .related-kennisitems {
+        padding: 2.5rem 0;
+    }
+
+    .related-kennisitems__header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-widgets-wrapper {
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
     /* Footer Vertical Stack */
     .footer-widgets-columns, 
     .footer-widgets-columns.columns-2,
     .footer-widgets-columns.columns-3,
-    .footer-widgets-columns.columns-4
+    .footer-widgets-columns.columns-4,
+    .footer-widgets-columns.columns-5
     {
         grid-template-columns: 1fr;
         gap: var(--footer-widget-gap-mobile, 20px);
@@ -968,5 +2520,11 @@ span.menu-arrow-icon.active svg {
     
     .copyright-menu ul {
         justify-content: center;
+    }
+
+    .ki-author-box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 }

@@ -10,7 +10,9 @@
 
 $footer_bg_color   = get_theme_mod( 'energieburcht_footer_bg_color' );
 $footer_text_color = get_theme_mod( 'energieburcht_footer_text_color' );
+$footer_title_color = get_theme_mod( 'energieburcht_footer_title_color' );
 $footer_link_color = get_theme_mod( 'energieburcht_footer_link_color' );
+$footer_link_hover_color = get_theme_mod( 'energieburcht_footer_link_hover_color' );
 
 $footer_gap_data = get_theme_mod( 'energieburcht_footer_gap' );
 $footer_gap_desktop = 50;
@@ -48,8 +50,14 @@ if ( $footer_bg_color ) {
 if ( $footer_text_color ) {
     $style .= '--footer-text-color: ' . esc_attr( $footer_text_color ) . ';';
 }
+if ( $footer_title_color ) {
+    $style .= '--footer-title-color: ' . esc_attr( $footer_title_color ) . ';';
+}
 if ( $footer_link_color ) {
     $style .= '--footer-link-color: ' . esc_attr( $footer_link_color ) . ';';
+}
+if ( $footer_link_hover_color ) {
+    $style .= '--footer-link-hover-color: ' . esc_attr( $footer_link_hover_color ) . ';';
 }
 if ( '' !== $footer_gap_desktop ) {
     $style .= '--footer-widget-gap: ' . intval( $footer_gap_desktop ) . esc_attr( $footer_gap_unit ) . ';';
@@ -68,15 +76,18 @@ $copyright_text_color = get_theme_mod( 'energieburcht_copyright_text_color' );
 
         <div class="container">
             <?php
-            $footer_columns = get_theme_mod( 'energieburcht_footer_columns', 4 );
+            $footer_columns = get_theme_mod( 'energieburcht_footer_columns', 5 );
             ?>
             <div class="footer-widgets-columns columns-<?php echo intval( $footer_columns ); ?>">
                 <?php
-                for ( $i = 1; $i <= $footer_columns; $i++ ) {
-                    if ( is_active_sidebar( 'footer-' . $i ) ) {
+                $widget_areas = array( 'footer-brand', 'footer-1', 'footer-2', 'footer-3', 'footer-4' );
+                
+                for ( $i = 0; $i < $footer_columns && $i < count( $widget_areas ); $i++ ) {
+                    $sidebar_id = $widget_areas[ $i ];
+                    if ( is_active_sidebar( $sidebar_id ) ) {
                         ?>
-                        <div class="footer-column footer-column-<?php echo intval( $i ); ?>">
-                            <?php dynamic_sidebar( 'footer-' . $i ); ?>
+                        <div class="footer-column footer-column-<?php echo intval( $i + 1 ); ?>">
+                            <?php dynamic_sidebar( $sidebar_id ); ?>
                         </div>
                         <?php
                     }

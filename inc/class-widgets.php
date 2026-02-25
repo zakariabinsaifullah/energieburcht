@@ -78,6 +78,32 @@ final class Energieburcht_Widgets {
 			)
 		);
 
+		// ── Footer Brand ──────────────────────────────────────────────────────
+		register_sidebar(
+			array(
+				'name'          => esc_html__( 'Footer Brand', 'energieburcht' ),
+				'id'            => 'footer-brand',
+				'description'   => esc_html__( 'First widget area displayed in the footer.', 'energieburcht' ),
+				'before_widget' => '<section id="%1$s" class="widget %2$s">',
+				'after_widget'  => '</section>',
+				'before_title'  => '<div class="widget-title">',
+				'after_title'   => '</div>',
+			)
+		);
+
+		// ── Single Projecten sidebar ──────────────────────────────────────────
+		register_sidebar(
+			array(
+				'name'          => esc_html__( 'Projecten Sidebar', 'energieburcht' ),
+				'id'            => 'projecten-sidebar',
+				'description'   => esc_html__( 'Widgets displayed in the sidebar on single Projecten pages.', 'energieburcht' ),
+				'before_widget' => '<section id="%1$s" class="widget %2$s">',
+				'after_widget'  => '</section>',
+				'before_title'  => '<div class="widget-title">',
+				'after_title'   => '</div>',
+			)
+		);
+
 		// ── Footer columns (1 – 4) ────────────────────────────────────────────
 		// Using a loop avoids repetitive register_sidebar() calls and makes it
 		// trivial to add or remove columns in the future.
@@ -91,8 +117,8 @@ final class Energieburcht_Widgets {
 					'description'   => sprintf( esc_html__( 'Widgets for footer column %d.', 'energieburcht' ), $column ),
 					'before_widget' => '<section id="%1$s" class="widget %2$s">',
 					'after_widget'  => '</section>',
-					'before_title'  => '<h2 class="widget-title">',
-					'after_title'   => '</h2>',
+					'before_title'  => '<div class="widget-title">',
+					'after_title'   => '</div>',
 				)
 			);
 		}

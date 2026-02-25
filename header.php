@@ -44,7 +44,59 @@
                         if ( is_active_sidebar( 'header-right' ) ) {
                             dynamic_sidebar( 'header-right' );
                         }
+                    ?>
+                    <?php
+                        $secondary_enable = get_theme_mod( 'energieburcht_header_cta_secondary_enable', true );
+                        if ( $secondary_enable ) {
+                            $secondary_text  = get_theme_mod( 'energieburcht_header_cta_secondary_text', 'Werken bij' );
+                            $secondary_link  = get_theme_mod( 'energieburcht_header_cta_secondary_link', '#' );
+                            $secondary_color = get_theme_mod( 'energieburcht_header_cta_secondary_color', '#0095c0' );
+                            $secondary_bg    = get_theme_mod( 'energieburcht_header_cta_secondary_bg', 'transparent' );
+                            $secondary_h_col = get_theme_mod( 'energieburcht_header_cta_secondary_hover_color', '#00acdd' );
+                            $secondary_h_bg  = get_theme_mod( 'energieburcht_header_cta_secondary_hover_bg', 'transparent' );
 
+                            $secondary_style = sprintf(
+                                '--cta-color: %s; --cta-bg: %s; --cta-hover-color: %s; --cta-hover-bg: %s;',
+                                esc_attr( $secondary_color ),
+                                esc_attr( $secondary_bg ),
+                                esc_attr( $secondary_h_col ),
+                                esc_attr( $secondary_h_bg )
+                            );
+
+                            printf(
+                                '<a href="%s" class="header-cta header-cta-secondary" style="%s">%s</a>',
+                                esc_url( $secondary_link ),
+                                $secondary_style,
+                                esc_html( $secondary_text )
+                            );
+                        }
+                        // Header CTAs
+                        $primary_enable = get_theme_mod( 'energieburcht_header_cta_primary_enable', true );
+                        if ( $primary_enable ) {
+                            $primary_text  = get_theme_mod( 'energieburcht_header_cta_primary_text', 'Plan intake' );
+                            $primary_link  = get_theme_mod( 'energieburcht_header_cta_primary_link', '#' );
+                            $primary_color = get_theme_mod( 'energieburcht_header_cta_primary_color', '#ffffff' );
+                            $primary_bg    = get_theme_mod( 'energieburcht_header_cta_primary_bg', '#00acdd' );
+                            $primary_h_col = get_theme_mod( 'energieburcht_header_cta_primary_hover_color', '#ffffff' );
+                            $primary_h_bg  = get_theme_mod( 'energieburcht_header_cta_primary_hover_bg', '#0095c0' );
+
+                            $primary_style = sprintf(
+                                '--cta-color: %s; --cta-bg: %s; --cta-hover-color: %s; --cta-hover-bg: %s;',
+                                esc_attr( $primary_color ),
+                                esc_attr( $primary_bg ),
+                                esc_attr( $primary_h_col ),
+                                esc_attr( $primary_h_bg )
+                            );
+
+                            printf(
+                                '<a href="%s" class="header-cta header-cta-primary" style="%s">%s</a>',
+                                esc_url( $primary_link ),
+                                $primary_style,
+                                esc_html( $primary_text )
+                            );
+                        }
+                    ?>
+                    <?php
                         // Header Search
                         if ( get_theme_mod( 'energieburcht_header_search_enable', false ) ) {
                         ?>
@@ -83,6 +135,17 @@
                         )
                     );
                 ?>
+                <?php
+                    // primary CTA
+                    if ( $primary_enable ) {
+                        printf(
+                            '<a href="%s" class="header-cta header-cta-primary sticky-cta" style="%s">%s</a>',
+                            esc_url( $primary_link ),
+                            $primary_style,
+                            esc_html( $primary_text )
+                        );
+                    }
+                ?>
             </div>
         </nav>
 
@@ -104,19 +167,15 @@
 
                     <div class="header-actions">
                         <?php
-                            // Header Search
-                            if ( get_theme_mod( 'energieburcht_header_search_enable', false ) ) {
-                            ?>
-                            <div class="header-search">
-                                <form role="search" method="get" class="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-                                    <input type="text" class="search-field" placeholder="<?php echo esc_attr_x( 'Zoeken...', 'placeholder', 'energieburcht' ); ?>" value="<?php echo get_search_query(); ?>" name="s" />
-                                    <button type="submit" class="search-submit" aria-label="<?php esc_attr_e( 'Search', 'energieburcht' ); ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                    </button>
-                                </form>
-                            </div>
-                            <?php
-                        }
+                            // Header CTAs (Mobile)
+                            if ( $primary_enable ) {
+                                printf(
+                                    '<a href="%s" class="header-cta header-cta-primary" style="%s">%s</a>',
+                                    esc_url( $primary_link ),
+                                    $primary_style,
+                                    esc_html( $primary_text )
+                                );
+                            }
                         ?>
                     </div><!-- .header-actions -->
                 </div><!-- .container -->

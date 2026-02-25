@@ -193,6 +193,17 @@ final class Energieburcht_Customizer {
 		$this->register_footer_section( $wp_customize );
 		$this->register_copyright_section( $wp_customize );
 		$this->register_back_to_top_section( $wp_customize );
+		$this->register_cpt_panel( $wp_customize );
+		$this->register_cpt_projecten_section( $wp_customize );
+		$this->register_cpt_projecten_content_section( $wp_customize );
+		$this->register_cpt_projecten_related_section( $wp_customize );
+		$this->register_cpt_kennisitems_section( $wp_customize );
+		$this->register_cpt_kennisitems_content_section( $wp_customize );
+		$this->register_cpt_kennisitems_single_section( $wp_customize );
+		$this->register_cpt_kennisitems_related_section( $wp_customize );
+		$this->register_archive_panel( $wp_customize );
+		$this->register_archive_hero_section( $wp_customize );
+		$this->register_archive_cards_section( $wp_customize );
 	}
 
 	/**
@@ -447,6 +458,326 @@ final class Energieburcht_Customizer {
 			)
 		);
 
+		// ── Primary CTA ────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_header_cta_primary_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_header_cta_primary_sep',
+				array(
+					'label'   => esc_html__( 'Primary CTA', 'energieburcht' ),
+					'section' => 'energieburcht_header_options',
+				)
+			)
+		);
+
+		// Enable Primary CTA
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_primary_enable',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_header_cta_primary_enable',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Enable Primary CTA', 'energieburcht' ),
+				'section' => 'energieburcht_header_options',
+			)
+		);
+
+		// Primary CTA Text
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_primary_text',
+			array(
+				'default'           => esc_html__( 'Plan intake', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_header_cta_primary_text',
+			array(
+				'type'    => 'text',
+				'label'   => esc_html__( 'Primary CTA Text', 'energieburcht' ),
+				'section' => 'energieburcht_header_options',
+			)
+		);
+
+		// Primary CTA Link
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_primary_link',
+			array(
+				'default'           => '#',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_header_cta_primary_link',
+			array(
+				'type'    => 'url',
+				'label'   => esc_html__( 'Primary CTA Link', 'energieburcht' ),
+				'section' => 'energieburcht_header_options',
+			)
+		);
+
+		// Primary CTA Color
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_primary_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_header_cta_primary_color',
+				array(
+					'label'   => esc_html__( 'Primary Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_header_options',
+				)
+			)
+		);
+
+		// Primary CTA Background
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_primary_bg',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_header_cta_primary_bg',
+				array(
+					'label'   => esc_html__( 'Primary Background Color', 'energieburcht' ),
+					'section' => 'energieburcht_header_options',
+				)
+			)
+		);
+
+		// Primary CTA Hover Color
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_primary_hover_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_header_cta_primary_hover_color',
+				array(
+					'label'   => esc_html__( 'Primary Hover Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_header_options',
+				)
+			)
+		);
+
+		// Primary CTA Hover Background
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_primary_hover_bg',
+			array(
+				'default'           => '#0095c0',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_header_cta_primary_hover_bg',
+				array(
+					'label'   => esc_html__( 'Primary Hover BG Color', 'energieburcht' ),
+					'section' => 'energieburcht_header_options',
+				)
+			)
+		);
+
+		// ── Secondary CTA ──────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_header_cta_secondary_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_header_cta_secondary_sep',
+				array(
+					'label'   => esc_html__( 'Secondary CTA', 'energieburcht' ),
+					'section' => 'energieburcht_header_options',
+				)
+			)
+		);
+
+		// Enable Secondary CTA
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_secondary_enable',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_header_cta_secondary_enable',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Enable Secondary CTA', 'energieburcht' ),
+				'section' => 'energieburcht_header_options',
+			)
+		);
+
+		// Secondary CTA Text
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_secondary_text',
+			array(
+				'default'           => esc_html__( 'Werken bij', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_header_cta_secondary_text',
+			array(
+				'type'    => 'text',
+				'label'   => esc_html__( 'Secondary CTA Text', 'energieburcht' ),
+				'section' => 'energieburcht_header_options',
+			)
+		);
+
+		// Secondary CTA Link
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_secondary_link',
+			array(
+				'default'           => '#',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_header_cta_secondary_link',
+			array(
+				'type'    => 'url',
+				'label'   => esc_html__( 'Secondary CTA Link', 'energieburcht' ),
+				'section' => 'energieburcht_header_options',
+			)
+		);
+
+		// Secondary CTA Color (will fallback to solid since alpha color control requires integration)
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_secondary_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_header_cta_secondary_color',
+				array(
+					'label'   => esc_html__( 'Secondary Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_header_options',
+				)
+			)
+		);
+
+		// Secondary CTA Background (Alpha supported assuming Energieburcht_Customize_Alpha_Color_Control)
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_secondary_bg',
+			array(
+				'default'           => 'transparent',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field', // Alpha requires text instead of hex
+			)
+		);
+		if ( class_exists( 'Energieburcht_Customize_Alpha_Color_Control' ) ) {
+			$wp_customize->add_control(
+				new Energieburcht_Customize_Alpha_Color_Control(
+					$wp_customize,
+					'energieburcht_header_cta_secondary_bg',
+					array(
+						'label'   => esc_html__( 'Secondary BG Color', 'energieburcht' ),
+						'section' => 'energieburcht_header_options',
+					)
+				)
+			);
+		} else {
+			$wp_customize->add_control(
+				new WP_Customize_Color_Control(
+					$wp_customize,
+					'energieburcht_header_cta_secondary_bg',
+					array(
+						'label'   => esc_html__( 'Secondary BG Color', 'energieburcht' ),
+						'section' => 'energieburcht_header_options',
+					)
+				)
+			);
+		}
+
+		// Secondary CTA Hover Color
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_secondary_hover_color',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_header_cta_secondary_hover_color',
+				array(
+					'label'   => esc_html__( 'Secondary Hover Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_header_options',
+				)
+			)
+		);
+
+		// Secondary CTA Hover Background
+		$wp_customize->add_setting(
+			'energieburcht_header_cta_secondary_hover_bg',
+			array(
+				'default'           => 'transparent',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		if ( class_exists( 'Energieburcht_Customize_Alpha_Color_Control' ) ) {
+			$wp_customize->add_control(
+				new Energieburcht_Customize_Alpha_Color_Control(
+					$wp_customize,
+					'energieburcht_header_cta_secondary_hover_bg',
+					array(
+						'label'   => esc_html__( 'Secondary Hover BG Color', 'energieburcht' ),
+						'section' => 'energieburcht_header_options',
+					)
+				)
+			);
+		} else {
+			$wp_customize->add_control(
+				new WP_Customize_Color_Control(
+					$wp_customize,
+					'energieburcht_header_cta_secondary_hover_bg',
+					array(
+						'label'   => esc_html__( 'Secondary Hover BG Color', 'energieburcht' ),
+						'section' => 'energieburcht_header_options',
+					)
+				)
+			);
+		}
+		
 		// ── Enable / disable header search ────────────────────────────────────
 		$wp_customize->add_setting(
 			'energieburcht_header_search_enable',
@@ -1048,7 +1379,7 @@ final class Energieburcht_Customizer {
 		$wp_customize->add_setting(
 			'energieburcht_footer_columns',
 			array(
-				'default'           => 4,
+				'default'           => 5,
 				'transport'         => 'refresh',
 				'sanitize_callback' => array( $this, 'sanitize_footer_columns' ),
 			)
@@ -1066,6 +1397,7 @@ final class Energieburcht_Customizer {
 					2 => esc_html__( '2 Columns', 'energieburcht' ),
 					3 => esc_html__( '3 Columns', 'energieburcht' ),
 					4 => esc_html__( '4 Columns', 'energieburcht' ),
+					5 => esc_html__( '5 Columns', 'energieburcht' ),
 				),
 			)
 		);
@@ -1096,7 +1428,7 @@ final class Energieburcht_Customizer {
 		$wp_customize->add_setting(
 			'energieburcht_footer_text_color',
 			array(
-				'default'           => '#ffffff',
+				'default'           => '#a5aab1',
 				'transport'         => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color',
 			)
@@ -1113,11 +1445,32 @@ final class Energieburcht_Customizer {
 			)
 		);
 
+		// ── Title color ────────────────────────────────────────────────────────
+		$wp_customize->add_setting(
+			'energieburcht_footer_title_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_footer_title_color',
+				array(
+					'label'   => esc_html__( 'Title Color', 'energieburcht' ),
+					'section' => 'energieburcht_footer_options',
+				)
+			)
+		);
+
 		// ── Link color ────────────────────────────────────────────────────────
 		$wp_customize->add_setting(
 			'energieburcht_footer_link_color',
 			array(
-				'default'           => '#ffffff',
+				'default'           => '#a5aab1',
 				'transport'         => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color',
 			)
@@ -1129,6 +1482,27 @@ final class Energieburcht_Customizer {
 				'energieburcht_footer_link_color',
 				array(
 					'label'   => esc_html__( 'Link Color', 'energieburcht' ),
+					'section' => 'energieburcht_footer_options',
+				)
+			)
+		);
+
+		// ── Link hover color ────────────────────────────────────────────────────────
+		$wp_customize->add_setting(
+			'energieburcht_footer_link_hover_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_footer_link_hover_color',
+				array(
+					'label'   => esc_html__( 'Link Hover Color', 'energieburcht' ),
 					'section' => 'energieburcht_footer_options',
 				)
 			)
@@ -1191,7 +1565,7 @@ final class Energieburcht_Customizer {
 		$wp_customize->add_setting(
 			'energieburcht_copyright_text',
 			array(
-				'default'           => '[copyright] Energieburcht [year]',
+				'default'           => '[copyright] [year] Energieburcht. Alle rechten voorbehouden.',
 				'transport'         => 'refresh',
 				'sanitize_callback' => 'wp_kses_post', // Allow safe HTML.
 			)
@@ -1450,14 +1824,14 @@ final class Energieburcht_Customizer {
 	/**
 	 * Sanitize the footer columns select value.
 	 *
-	 * Ensures the saved value is one of the four allowed integer choices.
+	 * Ensures the saved value is one of the allowed integer choices (1-5).
 	 *
 	 * @param  mixed $value Raw value from the Customizer.
-	 * @return int          Validated integer (1–4), or the default of 4.
+	 * @return int          Validated integer (1–5), or the default of 5.
 	 */
 	public function sanitize_footer_columns( $value ): int {
 		$value = absint( $value );
-		return in_array( $value, array( 1, 2, 3, 4 ), true ) ? $value : 4;
+		return in_array( $value, array( 1, 2, 3, 4, 5 ), true ) ? $value : 5;
 	}
 
 	/**
@@ -1586,5 +1960,3012 @@ final class Energieburcht_Customizer {
 			return false;
 		}
 		return 'image' === $control->manager->get_setting( 'energieburcht_hero_bg_type' )->value();
+	}
+
+	// =========================================================================
+	// Custom Post Types panel
+	// =========================================================================
+
+	/**
+	 * Register the "Custom Post Types" parent panel and the "Projecten"
+	 * child panel nested inside it.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_cpt_panel( WP_Customize_Manager $wp_customize ): void {
+		// Top-level CPT panel — lives inside Theme Options.
+		$wp_customize->add_panel(
+			'energieburcht_cpt_panel',
+			array(
+				'title'    => esc_html__( 'Custom Post Types', 'energieburcht' ),
+				'panel'    => 'energieburcht_theme_options',
+				'priority' => 15,
+			)
+		);
+
+		// Projecten sub-panel — lives inside Custom Post Types.
+		$wp_customize->add_panel(
+			'energieburcht_cpt_projecten_panel',
+			array(
+				'title'    => esc_html__( 'Projecten', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_panel',
+				'priority' => 10,
+			)
+		);
+
+		// Kennisitems sub-panel — lives inside Custom Post Types.
+		$wp_customize->add_panel(
+			'energieburcht_cpt_kennisitems_panel',
+			array(
+				'title'    => esc_html__( 'Kennisitems', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_panel',
+				'priority' => 20,
+			)
+		);
+	}
+
+	// =========================================================================
+	// Projecten CPT section
+	// =========================================================================
+
+	/**
+	 * Register the Projecten archive hero section with all settings and controls.
+	 *
+	 * Mirrors the page hero section but uses static customizer values for
+	 * title, description, and CTA — appropriate for an archive page.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_cpt_projecten_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_cpt_projecten_hero',
+			array(
+				'title'    => esc_html__( 'Hero Section', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_projecten_panel',
+				'priority' => 10,
+			)
+		);
+
+		// ── Enable Hero ───────────────────────────────────────────────────────
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_enable',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_enable',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Enable Hero Section', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_projecten_hero',
+			)
+		);
+
+		// ── Hero Content ──────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_hero_content_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_content_sep',
+				array(
+					'label'           => esc_html__( 'Hero Content', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_enabled' ),
+				)
+			)
+		);
+
+		// Show Title
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_show_title',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_show_title',
+			array(
+				'type'            => 'checkbox',
+				'label'           => esc_html__( 'Show Title', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_projecten_hero',
+				'active_callback' => array( $this, 'callback_cpt_projecten_hero_enabled' ),
+			)
+		);
+
+		// Title Text
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_title',
+			array(
+				'default'           => esc_html__( 'Projecten', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_title',
+			array(
+				'type'            => 'text',
+				'label'           => esc_html__( 'Title', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_projecten_hero',
+				'active_callback' => array( $this, 'callback_cpt_projecten_hero_title_visible' ),
+			)
+		);
+
+		// Show Description
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_show_description',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_show_description',
+			array(
+				'type'            => 'checkbox',
+				'label'           => esc_html__( 'Show Description', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_projecten_hero',
+				'active_callback' => array( $this, 'callback_cpt_projecten_hero_enabled' ),
+			)
+		);
+
+		// Description
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_description',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_kses_post',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_description',
+			array(
+				'type'            => 'textarea',
+				'label'           => esc_html__( 'Description', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_projecten_hero',
+				'active_callback' => array( $this, 'callback_cpt_projecten_hero_description_visible' ),
+			)
+		);
+
+		// Show CTA
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_show_cta',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_show_cta',
+			array(
+				'type'            => 'checkbox',
+				'label'           => esc_html__( 'Show CTA Button', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_projecten_hero',
+				'active_callback' => array( $this, 'callback_cpt_projecten_hero_enabled' ),
+			)
+		);
+
+		// CTA Text
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_cta_text',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_cta_text',
+			array(
+				'type'            => 'text',
+				'label'           => esc_html__( 'CTA Text', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_projecten_hero',
+				'active_callback' => array( $this, 'callback_cpt_projecten_hero_cta_visible' ),
+			)
+		);
+
+		// CTA URL
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_cta_url',
+			array(
+				'default'           => '#',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_cta_url',
+			array(
+				'type'            => 'url',
+				'label'           => esc_html__( 'CTA URL', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_projecten_hero',
+				'active_callback' => array( $this, 'callback_cpt_projecten_hero_cta_visible' ),
+			)
+		);
+
+		// ── Hero Typography ───────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_hero_typography_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_typography_sep',
+				array(
+					'label'           => esc_html__( 'Hero Typography', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_enabled' ),
+				)
+			)
+		);
+
+		// Title Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_title_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_title_color',
+				array(
+					'label'           => esc_html__( 'Title Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_title_visible' ),
+				)
+			)
+		);
+
+		// Description Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_description_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_description_color',
+				array(
+					'label'           => esc_html__( 'Description Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_description_visible' ),
+				)
+			)
+		);
+
+		// ── Hero CTA Colors ───────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_hero_cta_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_cta_sep',
+				array(
+					'label'           => esc_html__( 'Hero CTA', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// CTA Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_cta_text_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_cta_text_color',
+				array(
+					'label'           => esc_html__( 'CTA Text Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// CTA Background Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_cta_bg_color',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_cta_bg_color',
+				array(
+					'label'           => esc_html__( 'CTA Background Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// CTA Hover Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_cta_text_hover_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_cta_text_hover_color',
+				array(
+					'label'           => esc_html__( 'CTA Text Hover Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// CTA Hover Background Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_cta_bg_hover_color',
+			array(
+				'default'           => '#26b8e2',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_cta_bg_hover_color',
+				array(
+					'label'           => esc_html__( 'CTA Hover Background Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// ── Hero Background ───────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_hero_bg_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_bg_sep',
+				array(
+					'label'           => esc_html__( 'Hero Background', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_enabled' ),
+				)
+			)
+		);
+
+		// Background Type
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_bg_type',
+			array(
+				'default'           => 'color',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_key',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_hero_bg_type',
+			array(
+				'type'            => 'radio',
+				'label'           => esc_html__( 'Background Type', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_projecten_hero',
+				'active_callback' => array( $this, 'callback_cpt_projecten_hero_enabled' ),
+				'choices'         => array(
+					'color'    => esc_html__( 'Solid Color', 'energieburcht' ),
+					'gradient' => esc_html__( 'Gradient', 'energieburcht' ),
+					'image'    => esc_html__( 'Image', 'energieburcht' ),
+				),
+			)
+		);
+
+		// Background Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_bg_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_bg_color',
+				array(
+					'label'           => esc_html__( 'Background Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_bg_color' ),
+				)
+			)
+		);
+
+		// Gradient Start
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_gradient_start',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_gradient_start',
+				array(
+					'label'           => esc_html__( 'Gradient Start Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_bg_gradient' ),
+				)
+			)
+		);
+
+		// Gradient End
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_gradient_end',
+			array(
+				'default'           => '#00ACDD',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_gradient_end',
+				array(
+					'label'           => esc_html__( 'Gradient End Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_bg_gradient' ),
+				)
+			)
+		);
+
+		// Background Image
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_bg_image',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_hero_bg_image',
+				array(
+					'label'           => esc_html__( 'Background Image', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_projecten_hero',
+					'active_callback' => array( $this, 'callback_cpt_projecten_hero_bg_image' ),
+				)
+			)
+		);
+
+		// Overlay Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_hero_overlay_color',
+			array(
+				'default'           => 'rgba(0, 52, 73, 0.7)',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		if ( class_exists( 'Energieburcht_Customize_Alpha_Color_Control' ) ) {
+			$wp_customize->add_control(
+				new Energieburcht_Customize_Alpha_Color_Control(
+					$wp_customize,
+					'energieburcht_cpt_projecten_hero_overlay_color',
+					array(
+						'label'           => esc_html__( 'Overlay Color', 'energieburcht' ),
+						'section'         => 'energieburcht_cpt_projecten_hero',
+						'active_callback' => array( $this, 'callback_cpt_projecten_hero_bg_image' ),
+					)
+				)
+			);
+		} else {
+			$wp_customize->add_control(
+				new WP_Customize_Color_Control(
+					$wp_customize,
+					'energieburcht_cpt_projecten_hero_overlay_color',
+					array(
+						'label'           => esc_html__( 'Overlay Color', 'energieburcht' ),
+						'section'         => 'energieburcht_cpt_projecten_hero',
+						'active_callback' => array( $this, 'callback_cpt_projecten_hero_bg_image' ),
+					)
+				)
+			);
+		}
+	}
+
+	// =========================================================================
+	// Active Callbacks — CPT Projecten hero
+	// =========================================================================
+
+	/**
+	 * Callback: Is the Projecten hero enabled?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_projecten_hero_enabled( $control ): bool {
+		return (bool) $control->manager->get_setting( 'energieburcht_cpt_projecten_hero_enable' )->value();
+	}
+
+	/**
+	 * Callback: Is the Projecten hero enabled AND Show Title is checked?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_projecten_hero_title_visible( $control ): bool {
+		if ( ! $this->callback_cpt_projecten_hero_enabled( $control ) ) {
+			return false;
+		}
+		return (bool) $control->manager->get_setting( 'energieburcht_cpt_projecten_hero_show_title' )->value();
+	}
+
+	/**
+	 * Callback: Is the Projecten hero enabled AND Show Description is checked?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_projecten_hero_description_visible( $control ): bool {
+		if ( ! $this->callback_cpt_projecten_hero_enabled( $control ) ) {
+			return false;
+		}
+		return (bool) $control->manager->get_setting( 'energieburcht_cpt_projecten_hero_show_description' )->value();
+	}
+
+	/**
+	 * Callback: Is the Projecten hero enabled AND Show CTA is checked?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_projecten_hero_cta_visible( $control ): bool {
+		if ( ! $this->callback_cpt_projecten_hero_enabled( $control ) ) {
+			return false;
+		}
+		return (bool) $control->manager->get_setting( 'energieburcht_cpt_projecten_hero_show_cta' )->value();
+	}
+
+	/**
+	 * Callback: Is Projecten hero enabled AND BG type is Solid Color?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_projecten_hero_bg_color( $control ): bool {
+		if ( ! $this->callback_cpt_projecten_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'color' === $control->manager->get_setting( 'energieburcht_cpt_projecten_hero_bg_type' )->value();
+	}
+
+	/**
+	 * Callback: Is Projecten hero enabled AND BG type is Gradient?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_projecten_hero_bg_gradient( $control ): bool {
+		if ( ! $this->callback_cpt_projecten_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'gradient' === $control->manager->get_setting( 'energieburcht_cpt_projecten_hero_bg_type' )->value();
+	}
+
+	/**
+	 * Callback: Is Projecten hero enabled AND BG type is Image?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_projecten_hero_bg_image( $control ): bool {
+		if ( ! $this->callback_cpt_projecten_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'image' === $control->manager->get_setting( 'energieburcht_cpt_projecten_hero_bg_type' )->value();
+	}
+
+	// =========================================================================
+	// Projecten Content section
+	// =========================================================================
+
+	/**
+	 * Register the "Content" section inside the Projecten panel.
+	 *
+	 * Covers: read-more text, items per page, and card / button style colours.
+	 * The colour values are output as CSS custom properties scoped to
+	 * .archive-projecten in the archive template, so each property can be
+	 * targeted individually in CSS without specificity conflicts.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_cpt_projecten_content_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_cpt_projecten_content',
+			array(
+				'title'    => esc_html__( 'Content', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_projecten_panel',
+				'priority' => 20,
+			)
+		);
+
+		// ── Read More Text ────────────────────────────────────────────────────
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_read_more_text',
+			array(
+				'default'           => esc_html__( 'Lees meer', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_read_more_text',
+			array(
+				'type'    => 'text',
+				'label'   => esc_html__( 'Read More Button Text', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_projecten_content',
+			)
+		);
+
+		// ── Items Per Page ────────────────────────────────────────────────────
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_posts_per_page',
+			array(
+				'default'           => 9,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'absint',
+			)
+		);
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Range_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_posts_per_page',
+				array(
+					'label'       => esc_html__( 'Items Per Page', 'energieburcht' ),
+					'description' => esc_html__( 'Pagination appears automatically when the total exceeds this number.', 'energieburcht' ),
+					'section'     => 'energieburcht_cpt_projecten_content',
+					'input_attrs' => array(
+						'min'  => 1,
+						'max'  => 48,
+						'step' => 1,
+					),
+				)
+			)
+		);
+
+		// ── Card Styles ───────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_card_styles_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_card_styles_sep',
+				array(
+					'label'   => esc_html__( 'Card Styles', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Card Background
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_item_bg',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_item_bg',
+				array(
+					'label'   => esc_html__( 'Card Background', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Title Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_title_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_title_color',
+				array(
+					'label'   => esc_html__( 'Title Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Excerpt Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_excerpt_color',
+			array(
+				'default'           => '#212529',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_excerpt_color',
+				array(
+					'label'   => esc_html__( 'Excerpt Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// ── Button Styles ─────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_btn_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_btn_sep',
+				array(
+					'label'   => esc_html__( 'Button', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Button Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_btn_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_btn_color',
+				array(
+					'label'   => esc_html__( 'Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Button Background
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_btn_bg',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_btn_bg',
+				array(
+					'label'   => esc_html__( 'Background', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Button Hover Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_btn_hover_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_btn_hover_color',
+				array(
+					'label'   => esc_html__( 'Hover Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Button Hover Background
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_btn_hover_bg',
+			array(
+				'default'           => '#0095c0',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_btn_hover_bg',
+				array(
+					'label'   => esc_html__( 'Hover Background', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// ── Category Tag ──────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_cat_tag_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_cat_tag_sep',
+				array(
+					'label'   => esc_html__( 'Category Tag', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Category Tag Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_cat_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_cat_color',
+				array(
+					'label'   => esc_html__( 'Tag Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Category Tag Background
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_cat_bg',
+			array(
+				'default'           => '#e0f0f5',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_cat_bg',
+				array(
+					'label'   => esc_html__( 'Tag Background', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// ── Filter Bar ────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_filter_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_filter_sep',
+				array(
+					'label'   => esc_html__( 'Filter Bar', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Filter Button — Normal Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_filter_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_filter_color',
+				array(
+					'label'   => esc_html__( 'Button Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Filter Button — Normal Background
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_filter_bg',
+			array(
+				'default'           => '#f0f4f8',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_filter_bg',
+				array(
+					'label'   => esc_html__( 'Button Background', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Filter Button — Normal Border Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_filter_border',
+			array(
+				'default'           => '#EFEFEF',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_filter_border',
+				array(
+					'label'   => esc_html__( 'Button Border Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Filter Button — Active Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_filter_active_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_filter_active_color',
+				array(
+					'label'   => esc_html__( 'Active Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Filter Button — Active Background
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_filter_active_bg',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_filter_active_bg',
+				array(
+					'label'   => esc_html__( 'Active Background', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+
+		// Filter Button — Active Border Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_filter_active_border',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_filter_active_border',
+				array(
+					'label'   => esc_html__( 'Active Border Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_content',
+				)
+			)
+		);
+	}
+
+	// =========================================================================
+	// CPT — Projecten — Related Projects section
+	// =========================================================================
+
+	/**
+	 * Customizer section: Projecten → Related Projects.
+	 *
+	 * Controls the appearance of the "Meer projecten?" band shown at the bottom
+	 * of each single Projecten page. Values are consumed by
+	 * parts/related-projecten.php via get_theme_mod().
+	 *
+	 * Settings:
+	 *   - related_bg            Section background colour.
+	 *   - related_title         Heading text.
+	 *   - related_btn_label     "Lees meer" link label.
+	 *   - related_title_color   Heading colour.
+	 *   - related_btn_color     Link colour (normal).
+	 *   - related_btn_hover_color Link colour on hover.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_cpt_projecten_related_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_cpt_projecten_related',
+			array(
+				'title'    => esc_html__( 'Related Projects', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_projecten_panel',
+				'priority' => 30,
+			)
+		);
+
+		// ── Content ───────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_related_content_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_related_content_sep',
+				array(
+					'label'   => esc_html__( 'Content', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_related',
+				)
+			)
+		);
+
+		// Section Title Text
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_related_title',
+			array(
+				'default'           => esc_html__( 'Meer projecten?', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_related_title',
+			array(
+				'type'    => 'text',
+				'label'   => esc_html__( 'Section Title', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_projecten_related',
+			)
+		);
+
+		// Archive Link Label
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_related_btn_label',
+			array(
+				'default'           => esc_html__( 'Lees meer', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_projecten_related_btn_label',
+			array(
+				'type'    => 'text',
+				'label'   => esc_html__( 'Archive Link Label', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_projecten_related',
+			)
+		);
+
+		// ── Colours ───────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_projecten_related_colors_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_related_colors_sep',
+				array(
+					'label'   => esc_html__( 'Colours', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_related',
+				)
+			)
+		);
+
+		// Section Background Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_related_bg',
+			array(
+				'default'           => '#f8f9fa',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_related_bg',
+				array(
+					'label'   => esc_html__( 'Background Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_related',
+				)
+			)
+		);
+
+		// Title Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_related_title_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_related_title_color',
+				array(
+					'label'   => esc_html__( 'Title Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_related',
+				)
+			)
+		);
+
+		// Archive Link Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_related_btn_color',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_related_btn_color',
+				array(
+					'label'   => esc_html__( 'Link Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_related',
+				)
+			)
+		);
+
+		// Archive Link Hover Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_projecten_related_btn_hover_color',
+			array(
+				'default'           => '#0095c0',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_projecten_related_btn_hover_color',
+				array(
+					'label'   => esc_html__( 'Link Hover Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_projecten_related',
+				)
+			)
+		);
+	}
+
+	// =========================================================================
+	// Kennisitems CPT section
+	// =========================================================================
+
+	/**
+	 * Register the Kennisitems archive hero section with all settings and controls.
+	 *
+	 * Mirrors the Projecten hero section exactly but uses the
+	 * energieburcht_cpt_kennisitems_* setting namespace and the
+	 * energieburcht_cpt_kennisitems_panel parent panel.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_cpt_kennisitems_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_cpt_kennisitems_hero',
+			array(
+				'title'    => esc_html__( 'Hero Section', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_kennisitems_panel',
+				'priority' => 10,
+			)
+		);
+
+		// ── Enable Hero ───────────────────────────────────────────────────────
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_enable',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_enable',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Enable Hero Section', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_kennisitems_hero',
+			)
+		);
+
+		// ── Hero Content ──────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_hero_content_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_content_sep',
+				array(
+					'label'           => esc_html__( 'Hero Content', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_enabled' ),
+				)
+			)
+		);
+
+		// Show Title
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_show_title',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_show_title',
+			array(
+				'type'            => 'checkbox',
+				'label'           => esc_html__( 'Show Title', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_kennisitems_hero',
+				'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_enabled' ),
+			)
+		);
+
+		// Title Text
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_title',
+			array(
+				'default'           => esc_html__( 'Kennisitems', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_title',
+			array(
+				'type'            => 'text',
+				'label'           => esc_html__( 'Title', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_kennisitems_hero',
+				'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_title_visible' ),
+			)
+		);
+
+		// Show Description
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_show_description',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_show_description',
+			array(
+				'type'            => 'checkbox',
+				'label'           => esc_html__( 'Show Description', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_kennisitems_hero',
+				'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_enabled' ),
+			)
+		);
+
+		// Description
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_description',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_kses_post',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_description',
+			array(
+				'type'            => 'textarea',
+				'label'           => esc_html__( 'Description', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_kennisitems_hero',
+				'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_description_visible' ),
+			)
+		);
+
+		// Show CTA
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_show_cta',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_show_cta',
+			array(
+				'type'            => 'checkbox',
+				'label'           => esc_html__( 'Show CTA Button', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_kennisitems_hero',
+				'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_enabled' ),
+			)
+		);
+
+		// CTA Text
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_cta_text',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_cta_text',
+			array(
+				'type'            => 'text',
+				'label'           => esc_html__( 'CTA Text', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_kennisitems_hero',
+				'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_cta_visible' ),
+			)
+		);
+
+		// CTA URL
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_cta_url',
+			array(
+				'default'           => '#',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_cta_url',
+			array(
+				'type'            => 'url',
+				'label'           => esc_html__( 'CTA URL', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_kennisitems_hero',
+				'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_cta_visible' ),
+			)
+		);
+
+		// ── Hero Typography ───────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_hero_typography_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_typography_sep',
+				array(
+					'label'           => esc_html__( 'Hero Typography', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_enabled' ),
+				)
+			)
+		);
+
+		// Title Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_title_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_title_color',
+				array(
+					'label'           => esc_html__( 'Title Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_title_visible' ),
+				)
+			)
+		);
+
+		// Description Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_description_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_description_color',
+				array(
+					'label'           => esc_html__( 'Description Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_description_visible' ),
+				)
+			)
+		);
+
+		// ── Hero CTA Colors ───────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_hero_cta_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_cta_sep',
+				array(
+					'label'           => esc_html__( 'Hero CTA', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// CTA Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_cta_text_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_cta_text_color',
+				array(
+					'label'           => esc_html__( 'CTA Text Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// CTA Background Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_cta_bg_color',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_cta_bg_color',
+				array(
+					'label'           => esc_html__( 'CTA Background Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// CTA Hover Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_cta_text_hover_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_cta_text_hover_color',
+				array(
+					'label'           => esc_html__( 'CTA Text Hover Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// CTA Hover Background Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_cta_bg_hover_color',
+			array(
+				'default'           => '#26b8e2',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_cta_bg_hover_color',
+				array(
+					'label'           => esc_html__( 'CTA Hover Background Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_cta_visible' ),
+				)
+			)
+		);
+
+		// ── Hero Background ───────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_hero_bg_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_bg_sep',
+				array(
+					'label'           => esc_html__( 'Hero Background', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_enabled' ),
+				)
+			)
+		);
+
+		// Background Type
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_bg_type',
+			array(
+				'default'           => 'color',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_key',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_hero_bg_type',
+			array(
+				'type'            => 'radio',
+				'label'           => esc_html__( 'Background Type', 'energieburcht' ),
+				'section'         => 'energieburcht_cpt_kennisitems_hero',
+				'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_enabled' ),
+				'choices'         => array(
+					'color'    => esc_html__( 'Solid Color', 'energieburcht' ),
+					'gradient' => esc_html__( 'Gradient', 'energieburcht' ),
+					'image'    => esc_html__( 'Image', 'energieburcht' ),
+				),
+			)
+		);
+
+		// Background Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_bg_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_bg_color',
+				array(
+					'label'           => esc_html__( 'Background Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_bg_color' ),
+				)
+			)
+		);
+
+		// Gradient Start
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_gradient_start',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_gradient_start',
+				array(
+					'label'           => esc_html__( 'Gradient Start Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_bg_gradient' ),
+				)
+			)
+		);
+
+		// Gradient End
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_gradient_end',
+			array(
+				'default'           => '#00ACDD',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_gradient_end',
+				array(
+					'label'           => esc_html__( 'Gradient End Color', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_bg_gradient' ),
+				)
+			)
+		);
+
+		// Background Image
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_bg_image',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_hero_bg_image',
+				array(
+					'label'           => esc_html__( 'Background Image', 'energieburcht' ),
+					'section'         => 'energieburcht_cpt_kennisitems_hero',
+					'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_bg_image' ),
+				)
+			)
+		);
+
+		// Overlay Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_hero_overlay_color',
+			array(
+				'default'           => 'rgba(0, 52, 73, 0.7)',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		if ( class_exists( 'Energieburcht_Customize_Alpha_Color_Control' ) ) {
+			$wp_customize->add_control(
+				new Energieburcht_Customize_Alpha_Color_Control(
+					$wp_customize,
+					'energieburcht_cpt_kennisitems_hero_overlay_color',
+					array(
+						'label'           => esc_html__( 'Overlay Color', 'energieburcht' ),
+						'section'         => 'energieburcht_cpt_kennisitems_hero',
+						'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_bg_image' ),
+					)
+				)
+			);
+		} else {
+			$wp_customize->add_control(
+				new WP_Customize_Color_Control(
+					$wp_customize,
+					'energieburcht_cpt_kennisitems_hero_overlay_color',
+					array(
+						'label'           => esc_html__( 'Overlay Color', 'energieburcht' ),
+						'section'         => 'energieburcht_cpt_kennisitems_hero',
+						'active_callback' => array( $this, 'callback_cpt_kennisitems_hero_bg_image' ),
+					)
+				)
+			);
+		}
+	}
+
+	// =========================================================================
+	// Active Callbacks — CPT Kennisitems hero
+	// =========================================================================
+
+	/**
+	 * Callback: Is the Kennisitems hero enabled?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_kennisitems_hero_enabled( $control ): bool {
+		return (bool) $control->manager->get_setting( 'energieburcht_cpt_kennisitems_hero_enable' )->value();
+	}
+
+	/**
+	 * Callback: Is the Kennisitems hero enabled AND Show Title is checked?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_kennisitems_hero_title_visible( $control ): bool {
+		if ( ! $this->callback_cpt_kennisitems_hero_enabled( $control ) ) {
+			return false;
+		}
+		return (bool) $control->manager->get_setting( 'energieburcht_cpt_kennisitems_hero_show_title' )->value();
+	}
+
+	/**
+	 * Callback: Is the Kennisitems hero enabled AND Show Description is checked?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_kennisitems_hero_description_visible( $control ): bool {
+		if ( ! $this->callback_cpt_kennisitems_hero_enabled( $control ) ) {
+			return false;
+		}
+		return (bool) $control->manager->get_setting( 'energieburcht_cpt_kennisitems_hero_show_description' )->value();
+	}
+
+	/**
+	 * Callback: Is the Kennisitems hero enabled AND Show CTA is checked?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_kennisitems_hero_cta_visible( $control ): bool {
+		if ( ! $this->callback_cpt_kennisitems_hero_enabled( $control ) ) {
+			return false;
+		}
+		return (bool) $control->manager->get_setting( 'energieburcht_cpt_kennisitems_hero_show_cta' )->value();
+	}
+
+	/**
+	 * Callback: Is Kennisitems hero enabled AND BG type is Solid Color?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_kennisitems_hero_bg_color( $control ): bool {
+		if ( ! $this->callback_cpt_kennisitems_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'color' === $control->manager->get_setting( 'energieburcht_cpt_kennisitems_hero_bg_type' )->value();
+	}
+
+	/**
+	 * Callback: Is Kennisitems hero enabled AND BG type is Gradient?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_kennisitems_hero_bg_gradient( $control ): bool {
+		if ( ! $this->callback_cpt_kennisitems_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'gradient' === $control->manager->get_setting( 'energieburcht_cpt_kennisitems_hero_bg_type' )->value();
+	}
+
+	/**
+	 * Callback: Is Kennisitems hero enabled AND BG type is Image?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_cpt_kennisitems_hero_bg_image( $control ): bool {
+		if ( ! $this->callback_cpt_kennisitems_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'image' === $control->manager->get_setting( 'energieburcht_cpt_kennisitems_hero_bg_type' )->value();
+	}
+
+	// =========================================================================
+	// Kennisitems Content section
+	// =========================================================================
+
+	/**
+	 * Register the "Content" section inside the Kennisitems panel.
+	 *
+	 * Controls card appearance (background, title, excerpt), the read-more
+	 * button (normal + hover), and the per-category section header (title
+	 * color and "Lees meer" link colors). All values are output as CSS custom
+	 * properties scoped to .archive-kennisitems via an inline <style> block in
+	 * the archive template.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_cpt_kennisitems_content_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_cpt_kennisitems_content',
+			array(
+				'title'    => esc_html__( 'Content', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_kennisitems_panel',
+				'priority' => 20,
+			)
+		);
+
+		// ── Read More Text ────────────────────────────────────────────────────
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_read_more_text',
+			array(
+				'default'           => esc_html__( 'Lees meer', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_read_more_text',
+			array(
+				'type'    => 'text',
+				'label'   => esc_html__( 'Read More Button Text', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_kennisitems_content',
+			)
+		);
+
+		// ── Card Styles ───────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_card_styles_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_card_styles_sep',
+				array(
+					'label'   => esc_html__( 'Card Styles', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Card Background
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_item_bg',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_item_bg',
+				array(
+					'label'   => esc_html__( 'Card Background', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Title Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_title_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_title_color',
+				array(
+					'label'   => esc_html__( 'Title Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Excerpt Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_excerpt_color',
+			array(
+				'default'           => '#212529',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_excerpt_color',
+				array(
+					'label'   => esc_html__( 'Excerpt Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// ── Button Styles ─────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_btn_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_btn_sep',
+				array(
+					'label'   => esc_html__( 'Button', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Button Text / Border Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_btn_color',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_btn_color',
+				array(
+					'label'   => esc_html__( 'Text / Border Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Button Hover Text Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_btn_hover_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_btn_hover_color',
+				array(
+					'label'   => esc_html__( 'Hover Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Button Hover Background (fills the button on hover)
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_btn_hover_bg',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_btn_hover_bg',
+				array(
+					'label'   => esc_html__( 'Hover Background', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// ── Category Header ───────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_cat_header_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_cat_header_sep',
+				array(
+					'label'   => esc_html__( 'Category Header', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Category Title Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_cat_title_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_cat_title_color',
+				array(
+					'label'   => esc_html__( 'Category Title Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Category Link Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_cat_link_color',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_cat_link_color',
+				array(
+					'label'   => esc_html__( 'Category Link Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+
+		// Category Link Hover Color
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_cat_link_hover_color',
+			array(
+				'default'           => '#0095c0',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_cat_link_hover_color',
+				array(
+					'label'   => esc_html__( 'Category Link Hover Color', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_content',
+				)
+			)
+		);
+	}
+
+	// =========================================================================
+	// Kennisitems — Single Post section
+	// =========================================================================
+
+	/**
+	 * Customizer section: Kennisitems → Single Post.
+	 *
+	 * Controls visibility and appearance of the social share column, table of
+	 * contents, and author box shown on each single Kennisitems page.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_cpt_kennisitems_single_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_cpt_kennisitems_single',
+			array(
+				'title'    => esc_html__( 'Single Post', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_kennisitems_panel',
+				'priority' => 25,
+			)
+		);
+
+		// ── Visibility toggles ────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_visibility_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_single_visibility_sep',
+				array(
+					'label'   => esc_html__( 'Visibility', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_single',
+				)
+			)
+		);
+
+		// Show Social Share
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_single_show_social',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_single_show_social',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Show Social Share', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_kennisitems_single',
+			)
+		);
+
+		// Show Table of Contents
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_single_show_toc',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_single_show_toc',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Show Table of Contents', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_kennisitems_single',
+			)
+		);
+
+		// Show Author Box
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_single_show_author',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_single_show_author',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Show Author Box', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_kennisitems_single',
+			)
+		);
+
+		// Show Featured Image
+		$wp_customize->add_setting(
+			'energieburcht_cpt_kennisitems_single_show_featured_image',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_cpt_kennisitems_single_show_featured_image',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Show Featured Image', 'energieburcht' ),
+				'section' => 'energieburcht_cpt_kennisitems_single',
+			)
+		);
+
+		// ── Social Share Styles ───────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_social_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_single_social_sep',
+				array(
+					'label'   => esc_html__( 'Social Share', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_single',
+				)
+			)
+		);
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_social_color', array( 'default' => '#003449', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_social_color', array( 'label' => esc_html__( 'Icon Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_social_bg', array( 'default' => '#f0f4f8', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_social_bg', array( 'label' => esc_html__( 'Icon Background', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_social_hover_color', array( 'default' => '#ffffff', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_social_hover_color', array( 'label' => esc_html__( 'Icon Hover Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_social_hover_bg', array( 'default' => '#00acdd', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_social_hover_bg', array( 'label' => esc_html__( 'Icon Hover Background', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		// ── Table of Contents Styles ──────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_toc_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_single_toc_sep',
+				array(
+					'label'   => esc_html__( 'Table of Contents', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_single',
+				)
+			)
+		);
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_toc_bg', array( 'default' => '#f8f9fa', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_toc_bg', array( 'label' => esc_html__( 'TOC Background', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_toc_title_color', array( 'default' => '#003449', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_toc_title_color', array( 'label' => esc_html__( 'TOC Title Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_toc_link_color', array( 'default' => '#003449', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_toc_link_color', array( 'label' => esc_html__( 'TOC Link Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_toc_active_color', array( 'default' => '#00acdd', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_toc_active_color', array( 'label' => esc_html__( 'TOC Active Link Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		// ── Author Box Styles ─────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_author_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_single_author_sep',
+				array(
+					'label'   => esc_html__( 'Author Box', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_single',
+				)
+			)
+		);
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_author_bg', array( 'default' => '#f8f9fa', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_author_bg', array( 'label' => esc_html__( 'Background', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_author_name_color', array( 'default' => '#003449', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_author_name_color', array( 'label' => esc_html__( 'Author Name Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_single_author_bio_color', array( 'default' => '#212529', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_single_author_bio_color', array( 'label' => esc_html__( 'Bio Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_single' ) ) );
+	}
+
+	// =========================================================================
+	// Kennisitems — Related Posts section
+	// =========================================================================
+
+	/**
+	 * Customizer section: Kennisitems → Related Posts.
+	 *
+	 * Controls the "Gerelateerde kennisitems" band shown at the bottom of each
+	 * single Kennisitems page. Mirrors the Projecten Related Projects section.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_cpt_kennisitems_related_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_cpt_kennisitems_related',
+			array(
+				'title'    => esc_html__( 'Related Posts', 'energieburcht' ),
+				'panel'    => 'energieburcht_cpt_kennisitems_panel',
+				'priority' => 35,
+			)
+		);
+
+		// ── Content ───────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_related_content_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_related_content_sep',
+				array(
+					'label'   => esc_html__( 'Content', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_related',
+				)
+			)
+		);
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_related_title', array( 'default' => esc_html__( 'Gerelateerde kennisitems', 'energieburcht' ), 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_text_field' ) );
+		$wp_customize->add_control( 'energieburcht_cpt_kennisitems_related_title', array( 'type' => 'text', 'label' => esc_html__( 'Section Title', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_related' ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_related_btn_label', array( 'default' => esc_html__( 'Lees meer', 'energieburcht' ), 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_text_field' ) );
+		$wp_customize->add_control( 'energieburcht_cpt_kennisitems_related_btn_label', array( 'type' => 'text', 'label' => esc_html__( 'Archive Link Label', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_related' ) );
+
+		// ── Colours ───────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_related_colors_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_cpt_kennisitems_related_colors_sep',
+				array(
+					'label'   => esc_html__( 'Colours', 'energieburcht' ),
+					'section' => 'energieburcht_cpt_kennisitems_related',
+				)
+			)
+		);
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_related_bg', array( 'default' => '#f8f9fa', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_related_bg', array( 'label' => esc_html__( 'Background Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_related' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_related_title_color', array( 'default' => '#003449', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_related_title_color', array( 'label' => esc_html__( 'Title Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_related' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_related_btn_color', array( 'default' => '#00acdd', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_related_btn_color', array( 'label' => esc_html__( 'Link Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_related' ) ) );
+
+		$wp_customize->add_setting( 'energieburcht_cpt_kennisitems_related_btn_hover_color', array( 'default' => '#0095c0', 'transport' => 'refresh', 'sanitize_callback' => 'sanitize_hex_color' ) );
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'energieburcht_cpt_kennisitems_related_btn_hover_color', array( 'label' => esc_html__( 'Link Hover Color', 'energieburcht' ), 'section' => 'energieburcht_cpt_kennisitems_related' ) ) );
+	}
+
+	// =========================================================================
+	// Archive (taxonomy) panel
+	// =========================================================================
+
+	/**
+	 * Register the top-level "Archive" panel inside Theme Options.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_archive_panel( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_panel(
+			'energieburcht_archive_panel',
+			array(
+				'title'    => esc_html__( 'Archive', 'energieburcht' ),
+				'panel'    => 'energieburcht_theme_options',
+				'priority' => 20,
+			)
+		);
+	}
+
+	// =========================================================================
+	// Archive — Hero Section
+	// =========================================================================
+
+	/**
+	 * Register Customizer settings and controls for the taxonomy archive hero.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_archive_hero_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_archive_hero',
+			array(
+				'title'    => esc_html__( 'Hero Section', 'energieburcht' ),
+				'panel'    => 'energieburcht_archive_panel',
+				'priority' => 10,
+			)
+		);
+
+		// ── Enable / disable ──────────────────────────────────────────────────
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_enable',
+			array(
+				'default'           => true,
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'wp_validate_boolean',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_tax_hero_enable',
+			array(
+				'type'    => 'checkbox',
+				'label'   => esc_html__( 'Enable Hero Section', 'energieburcht' ),
+				'section' => 'energieburcht_archive_hero',
+			)
+		);
+
+		// ── Typography colours ────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_tax_hero_typography_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_tax_hero_typography_sep',
+				array(
+					'label'           => esc_html__( 'Typography', 'energieburcht' ),
+					'section'         => 'energieburcht_archive_hero',
+					'active_callback' => array( $this, 'callback_tax_archive_hero_enabled' ),
+				)
+			)
+		);
+
+		// Title colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_title_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_hero_title_color',
+				array(
+					'label'           => esc_html__( 'Title Color', 'energieburcht' ),
+					'section'         => 'energieburcht_archive_hero',
+					'active_callback' => array( $this, 'callback_tax_archive_hero_enabled' ),
+				)
+			)
+		);
+
+		// Description colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_desc_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_hero_desc_color',
+				array(
+					'label'           => esc_html__( 'Description Color', 'energieburcht' ),
+					'section'         => 'energieburcht_archive_hero',
+					'active_callback' => array( $this, 'callback_tax_archive_hero_enabled' ),
+				)
+			)
+		);
+
+		// ── Background ────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_tax_hero_bg_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_tax_hero_bg_sep',
+				array(
+					'label'           => esc_html__( 'Hero Background', 'energieburcht' ),
+					'section'         => 'energieburcht_archive_hero',
+					'active_callback' => array( $this, 'callback_tax_archive_hero_enabled' ),
+				)
+			)
+		);
+
+		// Background type — radio, mirrors projecten hero
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_bg_type',
+			array(
+				'default'           => 'color',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_key',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_tax_hero_bg_type',
+			array(
+				'type'            => 'radio',
+				'label'           => esc_html__( 'Background Type', 'energieburcht' ),
+				'section'         => 'energieburcht_archive_hero',
+				'active_callback' => array( $this, 'callback_tax_archive_hero_enabled' ),
+				'choices'         => array(
+					'color'    => esc_html__( 'Solid Color', 'energieburcht' ),
+					'gradient' => esc_html__( 'Gradient', 'energieburcht' ),
+					'image'    => esc_html__( 'Image', 'energieburcht' ),
+				),
+			)
+		);
+
+		// Solid background colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_bg_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_hero_bg_color',
+				array(
+					'label'           => esc_html__( 'Background Color', 'energieburcht' ),
+					'section'         => 'energieburcht_archive_hero',
+					'active_callback' => array( $this, 'callback_tax_archive_hero_bg_color' ),
+				)
+			)
+		);
+
+		// Gradient start
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_gradient_start',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_hero_gradient_start',
+				array(
+					'label'           => esc_html__( 'Gradient Start Color', 'energieburcht' ),
+					'section'         => 'energieburcht_archive_hero',
+					'active_callback' => array( $this, 'callback_tax_archive_hero_bg_gradient' ),
+				)
+			)
+		);
+
+		// Gradient end
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_gradient_end',
+			array(
+				'default'           => '#00ACDD',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_hero_gradient_end',
+				array(
+					'label'           => esc_html__( 'Gradient End Color', 'energieburcht' ),
+					'section'         => 'energieburcht_archive_hero',
+					'active_callback' => array( $this, 'callback_tax_archive_hero_bg_gradient' ),
+				)
+			)
+		);
+
+		// Background image
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_bg_image',
+			array(
+				'default'           => '',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Image_Control(
+				$wp_customize,
+				'energieburcht_tax_hero_bg_image',
+				array(
+					'label'           => esc_html__( 'Background Image', 'energieburcht' ),
+					'section'         => 'energieburcht_archive_hero',
+					'active_callback' => array( $this, 'callback_tax_archive_hero_bg_image' ),
+				)
+			)
+		);
+
+		// Overlay colour — alpha picker (with standard colour picker fallback)
+		$wp_customize->add_setting(
+			'energieburcht_tax_hero_overlay_color',
+			array(
+				'default'           => 'rgba(0, 52, 73, 0.7)',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		if ( class_exists( 'Energieburcht_Customize_Alpha_Color_Control' ) ) {
+			$wp_customize->add_control(
+				new Energieburcht_Customize_Alpha_Color_Control(
+					$wp_customize,
+					'energieburcht_tax_hero_overlay_color',
+					array(
+						'label'           => esc_html__( 'Overlay Color', 'energieburcht' ),
+						'section'         => 'energieburcht_archive_hero',
+						'active_callback' => array( $this, 'callback_tax_archive_hero_bg_image' ),
+					)
+				)
+			);
+		} else {
+			$wp_customize->add_control(
+				new WP_Customize_Color_Control(
+					$wp_customize,
+					'energieburcht_tax_hero_overlay_color',
+					array(
+						'label'           => esc_html__( 'Overlay Color', 'energieburcht' ),
+						'section'         => 'energieburcht_archive_hero',
+						'active_callback' => array( $this, 'callback_tax_archive_hero_bg_image' ),
+					)
+				)
+			);
+		}
+	}
+
+	// =========================================================================
+	// Archive — Cards & Pagination Section
+	// =========================================================================
+
+	/**
+	 * Register Customizer settings and controls for taxonomy archive cards
+	 * and pagination.
+	 *
+	 * @param WP_Customize_Manager $wp_customize Customizer manager instance.
+	 * @return void
+	 */
+	private function register_archive_cards_section( WP_Customize_Manager $wp_customize ): void {
+		$wp_customize->add_section(
+			'energieburcht_archive_cards',
+			array(
+				'title'    => esc_html__( 'Cards & Pagination', 'energieburcht' ),
+				'panel'    => 'energieburcht_archive_panel',
+				'priority' => 20,
+			)
+		);
+
+		// ── Content ───────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_tax_content_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_tax_content_sep',
+				array(
+					'label'   => esc_html__( 'Content', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Read more text
+		$wp_customize->add_setting(
+			'energieburcht_tax_read_more_text',
+			array(
+				'default'           => esc_html__( 'Lees meer', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_tax_read_more_text',
+			array(
+				'type'    => 'text',
+				'label'   => esc_html__( 'Read More Button Text', 'energieburcht' ),
+				'section' => 'energieburcht_archive_cards',
+			)
+		);
+
+		// ── Results Count Label ───────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_tax_results_label_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_tax_results_label_sep',
+				array(
+					'label'   => esc_html__( 'Resultaten Label', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Singular label (e.g. "resultaat")
+		$wp_customize->add_setting(
+			'energieburcht_tax_results_singular',
+			array(
+				'default'           => esc_html__( 'resultaat', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_tax_results_singular',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'Enkelvoud (1 resultaat)', 'energieburcht' ),
+				'description' => esc_html__( 'Wordt getoond bij precies 1 resultaat.', 'energieburcht' ),
+				'section'     => 'energieburcht_archive_cards',
+			)
+		);
+
+		// Plural label (e.g. "resultaten")
+		$wp_customize->add_setting(
+			'energieburcht_tax_results_plural',
+			array(
+				'default'           => esc_html__( 'resultaten', 'energieburcht' ),
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_text_field',
+			)
+		);
+		$wp_customize->add_control(
+			'energieburcht_tax_results_plural',
+			array(
+				'type'        => 'text',
+				'label'       => esc_html__( 'Meervoud (2+ resultaten)', 'energieburcht' ),
+				'description' => esc_html__( 'Wordt getoond bij 0 of meer dan 1 resultaat.', 'energieburcht' ),
+				'section'     => 'energieburcht_archive_cards',
+			)
+		);
+
+		// ── Card Styles ───────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_tax_card_styles_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_tax_card_styles_sep',
+				array(
+					'label'   => esc_html__( 'Card Styles', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Card background
+		$wp_customize->add_setting(
+			'energieburcht_tax_item_bg',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_item_bg',
+				array(
+					'label'   => esc_html__( 'Card Background', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Title colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_title_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_title_color',
+				array(
+					'label'   => esc_html__( 'Title Color', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Excerpt colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_excerpt_color',
+			array(
+				'default'           => '#212529',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_excerpt_color',
+				array(
+					'label'   => esc_html__( 'Excerpt Color', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// ── Button Styles ─────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_tax_btn_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_tax_btn_sep',
+				array(
+					'label'   => esc_html__( 'Read More Button', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Button text colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_btn_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_btn_color',
+				array(
+					'label'   => esc_html__( 'Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Button background
+		$wp_customize->add_setting(
+			'energieburcht_tax_btn_bg',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_btn_bg',
+				array(
+					'label'   => esc_html__( 'Background', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Button hover text colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_btn_hover_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_btn_hover_color',
+				array(
+					'label'   => esc_html__( 'Hover Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Button hover background
+		$wp_customize->add_setting(
+			'energieburcht_tax_btn_hover_bg',
+			array(
+				'default'           => '#0095c0',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_btn_hover_bg',
+				array(
+					'label'   => esc_html__( 'Hover Background', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// ── Pagination ────────────────────────────────────────────────────────
+		$wp_customize->add_setting( 'energieburcht_tax_pag_sep', array( 'transport' => 'refresh', 'sanitize_callback' => '__return_empty_string' ) );
+		$wp_customize->add_control(
+			new Energieburcht_Customize_Separator_Control(
+				$wp_customize,
+				'energieburcht_tax_pag_sep',
+				array(
+					'label'   => esc_html__( 'Pagination', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Pagination number colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_pag_color',
+			array(
+				'default'           => '#003449',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_pag_color',
+				array(
+					'label'   => esc_html__( 'Number Color', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Pagination active text colour
+		$wp_customize->add_setting(
+			'energieburcht_tax_pag_active_color',
+			array(
+				'default'           => '#ffffff',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_pag_active_color',
+				array(
+					'label'   => esc_html__( 'Active / Hover Text Color', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+
+		// Pagination active background
+		$wp_customize->add_setting(
+			'energieburcht_tax_pag_active_bg',
+			array(
+				'default'           => '#00acdd',
+				'transport'         => 'refresh',
+				'sanitize_callback' => 'sanitize_hex_color',
+			)
+		);
+		$wp_customize->add_control(
+			new WP_Customize_Color_Control(
+				$wp_customize,
+				'energieburcht_tax_pag_active_bg',
+				array(
+					'label'   => esc_html__( 'Active / Hover Background', 'energieburcht' ),
+					'section' => 'energieburcht_archive_cards',
+				)
+			)
+		);
+	}
+
+	// =========================================================================
+	// Archive hero — active callbacks
+	// =========================================================================
+
+	/**
+	 * Callback: Is the taxonomy archive hero enabled?
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_tax_archive_hero_enabled( $control ): bool {
+		return (bool) $control->manager->get_setting( 'energieburcht_tax_hero_enable' )->value();
+	}
+
+	/**
+	 * Callback: Hero enabled AND background type is "color".
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_tax_archive_hero_bg_color( $control ): bool {
+		if ( ! $this->callback_tax_archive_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'color' === $control->manager->get_setting( 'energieburcht_tax_hero_bg_type' )->value();
+	}
+
+	/**
+	 * Callback: Hero enabled AND background type is "gradient".
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_tax_archive_hero_bg_gradient( $control ): bool {
+		if ( ! $this->callback_tax_archive_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'gradient' === $control->manager->get_setting( 'energieburcht_tax_hero_bg_type' )->value();
+	}
+
+	/**
+	 * Callback: Hero enabled AND background type is "image".
+	 *
+	 * @param WP_Customize_Control $control The control instance.
+	 * @return bool
+	 */
+	public function callback_tax_archive_hero_bg_image( $control ): bool {
+		if ( ! $this->callback_tax_archive_hero_enabled( $control ) ) {
+			return false;
+		}
+		return 'image' === $control->manager->get_setting( 'energieburcht_tax_hero_bg_type' )->value();
 	}
 }

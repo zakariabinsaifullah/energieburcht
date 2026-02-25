@@ -35,8 +35,9 @@ final class Energieburcht_Enqueue {
 	 * Private constructor — obtain the instance via get_instance().
 	 */
 	private function __construct() {
-		add_action( 'wp_enqueue_scripts',          array( $this, 'enqueue_assets' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_editor_color_vars' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
 	}
 
 	/**
@@ -69,7 +70,6 @@ final class Energieburcht_Enqueue {
 	public function enqueue_assets(): void {
 		$this->enqueue_styles();
 		$this->enqueue_scripts();
-		$this->enqueue_color_vars();
 	}
 
 	/**
@@ -92,6 +92,15 @@ final class Energieburcht_Enqueue {
 			wp_enqueue_style(
 				'energieburcht-main',
 				ENERGIEBURCHT_URI . 'assets/css/main.css',
+				array( 'energieburcht-style', 'energieburcht-base' ),
+				ENERGIEBURCHT_VERSION
+			);
+		}
+
+		if ( file_exists( ENERGIEBURCHT_DIR . 'assets/css/base.css' ) ) {
+			wp_enqueue_style(
+				'energieburcht-base',
+				ENERGIEBURCHT_URI . 'assets/css/base.css',
 				array( 'energieburcht-style' ),
 				ENERGIEBURCHT_VERSION
 			);
@@ -114,6 +123,40 @@ final class Energieburcht_Enqueue {
 			ENERGIEBURCHT_VERSION,
 			true // Load in footer.
 		);
+
+		// Projecten category filter — only on the projecten archive.
+		if ( is_post_type_archive( 'projecten' ) ) {
+			wp_enqueue_script(
+				'energieburcht-projecten-filter',
+				ENERGIEBURCHT_URI . 'assets/js/projecten-filter.js',
+				array( 'jquery' ),
+				ENERGIEBURCHT_VERSION,
+				true
+			);
+			wp_localize_script(
+				'energieburcht-projecten-filter',
+				'projectenFilter',
+				array(
+					'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'projecten_filter_nonce' ),
+					'i18n'    => array(
+						'previous' => esc_html__( 'Vorige', 'energieburcht' ),
+						'next'     => esc_html__( 'Volgende', 'energieburcht' ),
+					),
+				)
+			);
+		}
+
+		// Kennisitems single post — TOC builder + scrollspy.
+		if ( is_singular( 'kennisitems' ) ) {
+			wp_enqueue_script(
+				'energieburcht-kennisitems-single',
+				ENERGIEBURCHT_URI . 'assets/js/kennisitems-single.js',
+				array(),
+				ENERGIEBURCHT_VERSION,
+				true // Load in footer.
+			);
+		}
 
 		// Back-to-top button — conditionally loaded based on Customizer setting.
 		if ( get_theme_mod( 'energieburcht_back_to_top_enable', false ) ) {
@@ -194,24 +237,16 @@ final class Energieburcht_Enqueue {
 		$css .= '--eb-typography-body:' . get_theme_mod( 'energieburcht_typography_body', '1rem' ) . ';';
 		$css .= '--eb-typography-excerpt:' . get_theme_mod( 'energieburcht_typography_excerpt', 'clamp(1.125rem, 2vw, 1.25rem)' ) . ';';
 		$css .= '--eb-typography-h1:' . get_theme_mod( 'energieburcht_typography_h1', 'clamp(2.25rem, 5vw, 3rem)' ) . ';';
-		$css .= '--eb-typography-h2:' . get_theme_mod( 'energieburcht_typography_h2', 'clamp(2rem, 4vw, 2.5rem)' ) . ';';
-		$css .= '--eb-typography-h3:' . get_theme_mod( 'energieburcht_typography_h3', 'clamp(1.5rem, 3vw, 2rem)' ) . ';';
-		$css .= '--eb-typography-h4:' . get_theme_mod( 'energieburcht_typography_h4', 'clamp(1.25rem, 2.5vw, 1.5rem)' ) . ';';
+		$css .= '--eb-typography-h2:' . get_theme_mod( 'energieburcht_typography_h2', 'clamp(1.5rem, 3vw, 2rem)' ) . ';';
+		$css .= '--eb-typography-h3:' . get_theme_mod( 'energieburcht_typography_h3', 'clamp(1.25rem, 2.5vw, 1.5rem)' ) . ';';
+		$css .= '--eb-typography-h4:' . get_theme_mod( 'energieburcht_typography_h4', 'clamp(1.125rem, 2vw, 1.25rem)' ) . ';';
 		$css .= '--eb-typography-button:' . get_theme_mod( 'energieburcht_typography_button', '1rem' ) . ';';
 
 		return $css . '}';
 	}
 
-	/**
-	 * Attach colour CSS custom properties to the root stylesheet on the front end.
-	 *
-	 * Using wp_add_inline_style means WordPress handles placement (after the
-	 * parent stylesheet) and deduplication automatically.
-	 *
-	 * @return void
-	 */
 	private function enqueue_color_vars(): void {
-		wp_add_inline_style( 'energieburcht-style', $this->generate_color_vars_css() );
+		// Method deprecated: Variables are now attached in enqueue_block_assets() directly
 	}
 
 	/**
@@ -226,6 +261,38 @@ final class Energieburcht_Enqueue {
 		// WordPress defaults --wp-editor-canvas-background to #ddd; override
 		// it to white so the editor iframe canvas matches the front end.
 		wp_add_inline_style( 'wp-block-editor', ':root{--wp-editor-canvas-background:#ffffff;}' );
+
+		// Load Gutenberg block extensions
+		if ( file_exists( ENERGIEBURCHT_DIR . 'assets/js/gutenberg/button-hover-colors.js' ) ) {
+			wp_enqueue_script(
+				'energieburcht-button-hover-colors',
+				ENERGIEBURCHT_URI . 'assets/js/gutenberg/button-hover-colors.js',
+				array( 'wp-blocks', 'wp-element', 'wp-hooks', 'wp-editor', 'wp-components', 'wp-data' ),
+				ENERGIEBURCHT_VERSION,
+				true
+			);
+		}
+	}
+
+	/**
+	 * Enqueue block assets for both editor and front end.
+	 *
+	 * @return void
+	 */
+	public function enqueue_block_assets(): void {
+		if ( file_exists( ENERGIEBURCHT_DIR . 'assets/css/blocks.css' ) ) {
+			wp_enqueue_style(
+				'energieburcht-blocks',
+				ENERGIEBURCHT_URI . 'assets/css/blocks.css',
+				array(),
+				ENERGIEBURCHT_VERSION
+			);	
+		} else {
+			wp_register_style( 'energieburcht-blocks', false );
+			wp_enqueue_style( 'energieburcht-blocks' );
+		}
+		
+		wp_add_inline_style( 'energieburcht-blocks', $this->generate_color_vars_css() );
 	}
 
 }

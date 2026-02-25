@@ -95,12 +95,15 @@ final class Energieburcht_Theme {
 	 */
 	private function load_modules(): void {
 		$this->modules = array(
-			'setup'      => Energieburcht_Theme_Setup::get_instance(),
-			'enqueue'    => Energieburcht_Enqueue::get_instance(),
-			'widgets'    => Energieburcht_Widgets::get_instance(),
-			'customizer' => Energieburcht_Customizer::get_instance(),
-			'post_types'    => Energieburcht_Post_Types::get_instance(),
-			'page_settings' => Energieburcht_Page_Settings::get_instance(),
+			'setup'           => Energieburcht_Theme_Setup::get_instance(),
+			'enqueue'         => Energieburcht_Enqueue::get_instance(),
+			'widgets'         => Energieburcht_Widgets::get_instance(),
+			'customizer'      => Energieburcht_Customizer::get_instance(),
+			'post_types'      => Energieburcht_Post_Types::get_instance(),
+			'page_settings'   => Energieburcht_Page_Settings::get_instance(),
+			'blocks_style'    => Energieburcht_Blocks_Style::get_instance(),
+			'svg_support'     => Energieburcht_Svg_Support::get_instance(),
+			'post_duplicator' => Energieburcht_Post_Duplicator::get_instance(),
 		);
 	}
 

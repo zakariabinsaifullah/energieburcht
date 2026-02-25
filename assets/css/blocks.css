@@ -1,0 +1,102 @@
+/**
+ * Blocks Style.
+ */
+
+ /* 
+    == Button Block ==
+ */
+
+.wp-block-button.is-style-blueish .wp-block-button__link {
+    background-color: #00acdd;
+    color: #fff;
+}
+
+.wp-block-button.is-style-blueish .wp-block-button__link:hover {
+    background-color: #0095c0;
+    color: #fff;
+}
+
+.wp-block-button.is-style-redish .wp-block-button__link {
+    background-color: #e31c23;
+    color: #fff;
+}
+
+.wp-block-button.is-style-redish .wp-block-button__link:hover {
+    background-color: #c1181e;
+    color: #fff;
+}
+
+.wp-block-button.is-style-link .wp-block-button__link {
+    background-color: transparent;
+    color: #00acdd;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+    background-color: transparent;
+    color: #00acdd;
+    border: 1px solid #00acdd;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link:hover {
+    background-color: #00acdd;
+    color: #fff;
+}
+
+/* 
+    == Kadence: Posts ==
+ */
+
+ .wp-block-kadence-posts.grid-cols.is-style-energieburcht, .is-style-energieburcht .grid-cols{
+    column-gap: 1.5rem;
+    row-gap: 1.5rem;
+ }
+
+ .wp-block-kadence-posts.is-style-energieburcht .kb-post-list-item, .is-style-energieburcht .loop-entry {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #efefef;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+ }
+
+ .wp-block-kadence-posts.is-style-energieburcht .loop-entry .entry-content-wrap {
+    padding: 1.5rem;
+ }
+
+ .is-style-energieburcht.wp-block-kadence-posts a.post-more-link {
+    background-color: #00acdd;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.8rem;
+    text-decoration: none;
+    font-size: 1rem;
+    text-transform: capitalize;
+    font-weight: 400;
+    font-family: var(--wp--preset--font-family--system-sans);
+    line-height: 1.5;
+    letter-spacing: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+ }
+
+  .is-style-energieburcht.wp-block-kadence-posts a.post-more-link:hover {
+    background-color: #0095c0;
+    color: #fff;
+  }
+
+
+  .is-style-energieburcht.wp-block-kadence-advancedgallery .kb-gallery-ul.kb-gallery-type-fluidcarousel .kt-blocks-carousel figure .kb-gal-image-radius img, .is-style-energieburcht .kb-gallery-main-contain.kb-gallery-type-fluidcarousel .kt-blocks-carousel .splide__list figure .kb-gal-image-radius img {
+    height: auto !important;
+    max-width: 120px !important;
+  }
+
+    .is-style-energieburcht.wp-block-kadence-advancedgallery .kb-gallery-ul.kb-gallery-type-fluidcarousel .kt-blocks-carousel figure .kb-gal-image-radius, .is-style-energieburcht .kb-gallery-main-contain.kb-gallery-type-fluidcarousel .kt-blocks-carousel .splide__list figure .kb-gal-image-radius img, .is-style-energieburcht .kb-gallery-main-contain.kb-gallery-type-fluidcarousel .kt-blocks-carousel .splide__list figure .kb-gal-image-radius {
+        height: auto !important;
+    }
+
+   .is-style-energieburcht.wp-block-kadence-advancedgallery .kb-blocks-fluid-carousel:not(.splide-initialized):not(.tns-slider), .is-style-energieburcht.wp-block-kadence-advancedgallery .splide__list {
+     align-items: center;
+   }
+
+   .wp-block-kadence-pane {
+        border-radius: 6px;
+        overflow: hidden;
+    }

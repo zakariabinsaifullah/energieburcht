@@ -1,0 +1,81 @@
+/* ==========================================================================
+   1. Reset & Global Styles
+   ========================================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --header-height-desktop: 140px;
+    --header-top-height: 80px;
+}
+
+body {
+    overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+body.menu-open {
+    overflow: hidden; /* Lock scroll when menu is open */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    color: var(--eb-link-color);
+}
+
+a:hover {
+    color: var(--eb-link-hover-color);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+}
+
+p {
+    margin: 0 0 1rem 0;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. Typography & Buttons
+   ========================================================================== */
+
+/* Global Button Styles */
+.button,
+.wp-block-button__link,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+    border-radius: 0.8rem;
+    box-shadow: none;
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: var(--wp--preset--font-family--system-sans);
+    background-color: var(--eb-btn-bg);
+    color: var(--eb-btn-color);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    line-height: 1.5;
+}
+
+.button:hover,
+.wp-block-button__link:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover {
+    background-color: var(--eb-custom-hover-bg, var(--eb-btn-hover-bg));
+    color: var(--eb-custom-hover-color, var(--eb-btn-hover-color));
+    text-decoration: none;
+}

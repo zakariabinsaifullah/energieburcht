@@ -8,7 +8,7 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
+	<div class="entry-header">
 		<?php
 		$global_show = get_theme_mod( 'energieburcht_page_title_enable', false );
 		$local_vis   = get_post_meta( get_the_ID(), '_energieburcht_title_visibility', true );
@@ -44,7 +44,7 @@
 			the_title( '<h1 class="entry-title">', '</h1>' );
 		endif;
 		?>
-	</header><!-- .entry-header -->
+	</div><!-- .entry-header -->
 
 	<div class="entry-content">
 		<?php
@@ -58,27 +58,4 @@
 		);
 		?>
 	</div><!-- .entry-content -->
-
-	<?php if ( get_edit_post_link() ) : ?>
-		<footer class="entry-footer">
-			<?php
-			edit_post_link(
-				sprintf(
-					wp_kses(
-						/* translators: %s: Name of current post. Only visible to screen readers */
-						__( 'Edit <span class="screen-reader-text">%s</span>', 'energieburcht' ),
-						array(
-							'span' => array(
-								'class' => array(),
-							),
-						)
-					),
-					wp_kses_post( get_the_title() )
-				),
-				'<span class="edit-link">',
-				'</span>'
-			);
-			?>
-		</footer><!-- .entry-footer -->
-	<?php endif; ?>
 </article><!-- #post-<?php the_ID(); ?> -->

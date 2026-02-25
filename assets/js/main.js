@@ -40,7 +40,7 @@
             $item.append(chevronIcon);
 
             $item.on('click', function(e) {
-                e.preventDefault();
+                // e.preventDefault();
                 $mobileMenu.toggleClass('child-nav-open');
                 $item.toggleClass('active');
                 $menuHeader.toggleClass('active');
@@ -68,17 +68,18 @@
         const stickyThreshold = topBarHeight;
 
         $(window).on('scroll', function() {
-            if ($(window).scrollTop() > stickyThreshold) {
-                if (!$body.hasClass('is-sticky')) {
-                    $body.addClass('is-sticky');
-                    // Add padding to body to prevent jump, matching nav height
-                    // only if we want to push content down. 
-                    // Alternatively, we can add a placeholder dynamically.
-                    // For simplicity and robustness, adding padding-top to body or a wrapper is common.
-                    // Let's check if there's a better wrapper, otherwise body padding.
-                    // But site-header might be transparent. Let's try adding a placeholder logic or just body padding.
-                    // Given the previous jumpiness, padding is key.
-                    $body.css('padding-top', navHeight + 'px');
+            if (window.innerWidth > 991) {
+                if ($(window).scrollTop() > stickyThreshold) {
+                    if (!$body.hasClass('is-sticky')) {
+                        $body.addClass('is-sticky');
+                        // Add padding to body to prevent jump, matching nav height
+                        $body.css('padding-top', navHeight + 'px');
+                    }
+                } else {
+                    if ($body.hasClass('is-sticky')) {
+                        $body.removeClass('is-sticky');
+                        $body.css('padding-top', 0);
+                    }
                 }
             } else {
                 if ($body.hasClass('is-sticky')) {

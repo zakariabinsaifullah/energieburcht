@@ -69,9 +69,9 @@ function energieburcht_autoloader( string $class_name ): void {
 		'Energieburcht_Customize_Editor_Control'           => ENERGIEBURCHT_DIR . 'inc/controls/class-control-editor.php',
 		'Energieburcht_Customize_Palette_Color_Control'    => ENERGIEBURCHT_DIR . 'inc/controls/class-control-palette-color.php',
 		'Energieburcht_Customize_Range_Control'            => ENERGIEBURCHT_DIR . 'inc/controls/class-control-range.php',
-			'Energieburcht_Customize_Responsive_Range_Control' => ENERGIEBURCHT_DIR . 'inc/controls/class-control-responsive-range.php',
-			'Energieburcht_Customize_Separator_Control'        => ENERGIEBURCHT_DIR . 'inc/controls/class-control-separator.php',
-			'Energieburcht_Customize_Typography_Control'       => ENERGIEBURCHT_DIR . 'inc/controls/class-control-typography.php',
+		'Energieburcht_Customize_Responsive_Range_Control' => ENERGIEBURCHT_DIR . 'inc/controls/class-control-responsive-range.php',
+		'Energieburcht_Customize_Separator_Control'        => ENERGIEBURCHT_DIR . 'inc/controls/class-control-separator.php',
+		'Energieburcht_Customize_Typography_Control'       => ENERGIEBURCHT_DIR . 'inc/controls/class-control-typography.php',
 		);
 
 	if ( isset( $class_map[ $class_name ] ) ) {

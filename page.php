@@ -18,18 +18,20 @@ get_header();
 	<main id="primary" class="site-main">
 
 		<?php
-		// Render Hero Section
-		get_template_part( 'parts/hero' );
+			// Render Hero Section
+			get_template_part( 'parts/hero' );
 		?>
+
+		<?php get_template_part( 'parts/breadcrumbs' ); ?>
 
 		<div class="container">
 			<?php
-			while ( have_posts() ) :
-				the_post();
+				while ( have_posts() ) :
+					the_post();
 
-				get_template_part( 'parts/content', 'page' );
+					get_template_part( 'parts/content', 'page' );
 
-			endwhile; // End of the loop.
+				endwhile; // End of the loop.
 			?>
 		</div>
 	</main><!-- #primary -->
